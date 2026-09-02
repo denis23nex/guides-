@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Биомеханика включения ягодиц при гиперлордозе | Интерактивный гайд</title>
+<style>
+  :root {
+    --bg-primary: #fcfbf9;
+    --bg-card: #ffffff;
+    --bg-secondary: #f4efe9;
+    --text-main: #242220;
+    --text-muted: #66605b;
+    --accent-terracotta: #c4644a;
+    --accent-terracotta-dark: #a24b33;
+    --accent-terracotta-soft: #f8ebe6;
+    --accent-sage: #4d775f;
+    --accent-sage-soft: #eaf2ed;
+    --accent-amber: #c07d2c;
+    --accent-amber-soft: #fbf2e5;
+    --danger: #b83d34;
+    --danger-soft: #fceeed;
+    --border: #e4dcd2;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.07);
+    --radius-md: 12px;
+    --radius-lg: 18px;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    line-height: 1.6;
+    padding: 0;
+  }
+
+  header {
+    background: linear-gradient(135deg, #2a2724 0%, #181615 100%);
+    color: #fff;
+    padding: 44px 20px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -20%;
+    width: 140%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(196,100,74,0.2) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .header-content {
+    max-width: 840px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .badge {
+    display: inline-block;
+    background-color: rgba(196,100,74,0.25);
+    color: #f0a38e;
+    border: 1px solid rgba(196,100,74,0.4);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 14px;
+    letter-spacing: -0.4px;
+    word-break: break-word;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    color: #d8d2cb;
+    max-width: 680px;
+    margin: 0 auto;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .container {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 24px 16px 80px;
+  }
+
+  /* Navigation Tabs (Fixed horizontal scroll & wrap) */
+  .nav-tabs-wrapper {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin-bottom: 28px;
+  }
+
+  .nav-tabs {
+    display: flex;
+    gap: 6px;
+    background: #e6ded3;
+    padding: 6px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .nav-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-btn {
+    flex: 0 0 auto;
+    background: transparent;
+    border: none;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #534c44;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .tab-btn.active {
+    background: var(--bg-card);
+    color: var(--accent-terracotta-dark);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+    animation: fadeIn 0.25s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Cards */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 26px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card-title {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .card-title .icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--accent-terracotta-soft);
+    color: var(--accent-terracotta);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Simulator Layout (Safe Flex/Grid) */
+  .sim-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  @media (min-width: 820px) {
+    .sim-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      align-items: start;
+    }
+  }
+
+  .sim-canvas-box {
+    background: #faf7f2;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .svg-container {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+  }
+
+  .sim-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .control-group {
+    background: var(--bg-secondary);
+    padding: 14px 18px;
+    border-radius: var(--radius-md);
+  }
+
+  .control-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .slider {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 8px;
+    border-radius: 4px;
+    background: #ded7cc;
+    outline: none;
+    margin: 8px 0;
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--accent-terracotta);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  }
+
+  .toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    gap: 12px;
+  }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+
+  .switch input { opacity: 0; width: 0; height: 0; }
+
+  .slider-toggle {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #cbbeaf;
+    transition: .3s;
+    border-radius: 26px;
+  }
+
+  .slider-toggle:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+  }
+
+  input:checked + .slider-toggle {
+    background-color: var(--accent-sage);
+  }
+
+  input:checked + .slider-toggle:before {
+    transform: translateX(22px);
+  }
+
+  .meter-box {
+    margin-top: 4px;
+  }
+
+  .meter-row {
+    margin-bottom: 12px;
+  }
+
+  .meter-label-val {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    gap: 8px;
+  }
+
+  .meter-bar {
+    height: 12px;
+    background: #ebe4d8;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .meter-fill {
+    height: 100%;
+    width: 30%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+  }
+
+  .status-callout {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-top: 14px;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+
+  /* Diagnostic Thomas Test Section */
+  .thomas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .thomas-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .thomas-tag {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 10px;
+    align-self: flex-start;
+  }
+
+  .thomas-tag.danger { background: var(--danger-soft); color: var(--danger); }
+  .thomas-tag.warning { background: var(--accent-amber-soft); color: var(--accent-amber); }
+  .thomas-tag.info { background: var(--accent-terracotta-soft); color: var(--accent-terracotta); }
+
+  /* Protocol Step List (Bullet-proof layout) */
+  .protocol-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 16px;
+  }
+
+  .protocol-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .step-badge {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--accent-terracotta);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(196,100,74,0.3);
+  }
+
+  .step-content {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+  }
+
+  .step-content h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+    color: #242220;
+    line-height: 1.35;
+  }
+
+  .key-cues {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .cue-pill {
+    font-size: 12px;
+    background: var(--bg-secondary);
+    padding: 4px 10px;
+    border-radius: 20px;
+    color: #554e47;
+    border: 1px solid #e0d8cc;
+  }
+
+  /* Interactive Workout Component */
+  .interactive-workout {
+    background: #272421;
+    color: #f7f5f2;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+  }
+
+  .workout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    padding-bottom: 16px;
+    margin-bottom: 18px;
+  }
+
+  .timer-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .timer-display {
+    font-size: 34px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #f0a38e;
+    line-height: 1;
+  }
+
+  .timer-btn {
+    background: var(--accent-terracotta);
+    border: none;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .timer-btn:hover {
+    background: var(--accent-terracotta-dark);
+  }
+
+  .exercise-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .selector-btn {
+    background: #3a3530;
+    border: 1px solid #4a443e;
+    color: #ded6cc;
+    padding: 8px 14px;
+    font-size: 13px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .selector-btn.active {
+    background: var(--accent-terracotta);
+    border-color: var(--accent-terracotta);
+    color: #fff;
+  }
+
+  .checklist-box {
+    margin-top: 18px;
+  }
+
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .checklist-item input[type="checkbox"] {
+    margin-top: 2px;
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  /* Table styling */
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 14px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  th, td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.45;
+  }
+
+  th {
+    background: var(--bg-secondary);
+    color: #403a34;
+    font-weight: 600;
+  }
+
+  /* Troubleshooting grid */
+  .trouble-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .trouble-card {
+    padding: 16px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 36px;
+    padding: 20px 16px;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 22px; }
+    .subtitle { font-size: 14px; }
+    .card { padding: 18px; }
+    .step-content { padding: 14px; }
+    .interactive-workout { padding: 18px; }
+    .timer-display { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <span class="badge">Анатомия & Кинезиология</span>
+    <h1>Пошаговая биомеханика включения ягодиц при гиперлордозе</h1>
+    <p class="subtitle">Практический гид по устранению компрессии в пояснично-крестцовом переходе (L5–S1) и целенаправленной изоляции большой ягодичной мышцы.</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Sticky Tabs Navigation -->
+  <div class="nav-tabs-wrapper">
+    <nav class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('tab-sim', this)">⚡ 1. Биомеханика</button>
+      <button class="tab-btn" onclick="switchTab('tab-diag', this)">🔬 2. Тест Томаса</button>
+      <button class="tab-btn" onclick="switchTab('tab-protocol', this)">🎯 3. Протокол 4 шагов</button>
+      <button class="tab-btn" onclick="switchTab('tab-practice', this)">⏱️ 4. Практика и таймер</button>
+      <button class="tab-btn" onclick="switchTab('tab-troubleshoot', this)">❓ 5. Разбор ошибок</button>
+    </nav>
+  </div>
+
+  <!-- TAB 1: SIMULATOR -->
+  <div id="tab-sim" class="tab-content active">
+    <div class="card">
+      <div class="card-title">
+        <div class="icon">⚙️</div>
+        <h2>Симулятор распределения нагрузки: Поясница vs Ягодицы</h2>
+      </div>
+      <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
+        При гиперлордозе подвздошно-поясничные мышцы укорочены, а таз наклонен вперед. Двигайте ползунок и включайте кор, чтобы увидеть, как правильный угол наклона таза отключает опасное сдавливание позвонков.
+      </p>
+
+      <div class="sim-layout">
+        <!-- SVG Canvas -->
+        <div class="sim-canvas-box">
+          <svg class="svg-container" viewBox="0 0 300 320">
+            <!-- Grid reference -->
+            <line x1="150" y1="20" x2="150" y2="300" stroke="#e8e2d8" stroke-dasharray="4" />
+            <line x1="20" y1="180" x2="280" y2="180" stroke="#e8e2d8" stroke-dasharray="4" />
+            
+            <!-- Spine Lumbar Arc -->
+            <path id="spinePath" d="M 150 40 Q 185 110 150 170" fill="none" stroke="#5f5953" stroke-width="9" stroke-linecap="round" />
+            
+            <!-- Stress Zone (Hotspot) -->
+            <circle id="compressionSpark" cx="178" cy="125" r="12" fill="#b83d34" opacity="0.85" />
+            
+            <!-- Dynamic Spine Stress Text Marker (positioned safely outside) -->
+            <rect id="sparkBox" x="195" y="112" width="95" height="24" rx="4" fill="#fceeed" stroke="#b83d34" stroke-width="1" />
+            <text id="sparkLabel" x="200" y="128" font-size="11" font-weight="700" fill="#b83d34">Стресс L5-S1</text>
+
+            <!-- Pelvis & Hip Group (Dynamic Rotation) -->
+            <g id="pelvisGroup" transform="translate(150, 170) rotate(18)">
+              <!-- Pelvic Silhouette -->
+              <ellipse cx="0" cy="0" rx="46" ry="24" fill="#ded5c7" stroke="#776e64" stroke-width="3" />
+              <!-- ASIS Marker (Передняя ость таза) -->
+              <circle cx="-38" cy="-4" r="5" fill="#c4644a" />
+              <!-- PSIS Marker (Задняя ость таза) -->
+              <circle cx="38" cy="-4" r="5" fill="#4d775f" />
+              <!-- Femur (Бедренная кость) -->
+              <line x1="0" y1="0" x2="-22" y2="105" stroke="#877d73" stroke-width="10" stroke-linecap="round" />
+              <!-- Glute Muscle Tension Vector -->
+              <path id="gluteVector" d="M 26 -4 Q 45 45 -16 75" fill="none" stroke="#c4644a" stroke-width="6" stroke-linecap="round" />
+            </g>
+
+            <!-- Legends -->
+            <text x="30" y="295" font-size="11" fill="#756f68">⚪ Бедро</text>
+            <text x="120" y="295" font-size="11" fill="#c4644a">🔴 Таз / Ягодица</text>
+            <text x="220" y="295" font-size="11" fill="#4d775f">🟢 Кор</text>
+          </svg>
+
+          <div id="simFeedback" class="status-callout" style="background: var(--danger-soft); color: var(--danger);">
+            <strong>⚠️ Критический лордоз:</strong> разгибание бедра заблокировано, поясница принимает на себя до 85% нагрузки.
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="sim-controls">
+          <div class="control-group">
+            <div class="control-label">
+              <span>Положение таза:</span>
+              <span id="tiltValText" style="color: var(--accent-terracotta); font-weight:700;">Передний наклон (+18°)</span>
+            </div>
+            <input type="range" id="tiltSlider" class="slider" min="-10" max="25" value="18" step="1" oninput="updateSimulation()">
+            <div style="display:flex; justify-content:space-between; font-size:11px; color:#78726a;">
+              <span>Задний наклон (-10°)</span>
+              <span>Нейтраль (0°)</span>
+              <span>Передний (+25°)</span>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="toggle-container">
+              <span style="font-size:14px; font-weight:600;">Фиксация ребер и кора («Ribs Down»):</span>
+              <div class="switch">
+                <input type="checkbox" id="coreToggle" onchange="updateSimulation()">
+                <span class="slider-toggle"></span>
+              </div>
+            </label>
+          </div>
+
+          <div class="meter-box">
+            <div class="meter-row">
+              <div class="meter-label-val">
+                <span>Изолированная активация ягодицы:</span>
+                <span id="gluteScoreText">20%</span>
+              </div>
+              <div class="meter-bar">
+                <div id="gluteBar" class="meter-fill" style="width: 20%; background-color: var(--danger);"></div>
+              </div>
+            </div>
+
+            <div class="meter-row">
+              <div class="meter-label-val">
+                <span>Компрессионный сдвиг в пояснице (L5–S1):</span>
+                <span id="lumbarScoreText">85%</span>
+              </div>
+              <div class="meter-bar">
+                <div id="lumbarBar" class="meter-fill" style="width: 85%; background-color: var(--danger);"></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-secondary); border-radius: 10px; padding: 12px 14px; font-size: 13px; color: #524b44; line-height:1.45;">
+            💡 <strong>Анатомический факт:</strong> Чистое разгибание бедра без участия позвоночника составляет всего <strong>10°–15°</strong>. Все, что вы пытаетесь поднять выше этого угла при гиперлордозе, достигается за счет выламывания поясницы.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: THOMAS TEST -->
+  <div id="tab-diag" class="tab-content">
+    <div class="card">
+      <div class="card-title">
+        <div class="icon">🔬</div>
+        <h2>Модифицированный тест Томаса: диагностика укорочения сгибателей</h2>
+      </div>
+      <p style="color: var(--text-muted); font-size: 14px;">
+        Если сгибатели бедра находятся в спазме или укорочены, ягодица «спит» по закону реципрокного торможения (закон Шеррингтона). Положите клиентку на край опоры:
+      </p>
+
+      <div class="thomas-grid">
+        <div class="thomas-card">
+          <div>
+            <span class="thomas-tag danger">Паттерн 1</span>
+            <h4 style="font-size:15px; margin-bottom:6px;">Бедро висит над кушеткой</h4>
+            <p style="font-size:13px; color:#5c554e; margin-bottom:12px;">
+              Бедро не опускается до горизонтальной линии (угол разгибания меньше 0° относительно таза).
+            </p>
+          </div>
+          <div style="background:var(--bg-secondary); padding:10px; border-radius:8px; font-size:12px; line-height:1.4;">
+            <strong>Укорочена:</strong> Подвздошно-поясничная мышца (Iliopsoas).<br>
+            <strong>Решение:</strong> Точечный релиз ямки подвздошной кости + полувыпад с подкруткой.
+          </div>
+        </div>
+
+        <div class="thomas-card">
+          <div>
+            <span class="thomas-tag warning">Паттерн 2</span>
+            <h4 style="font-size:15px; margin-bottom:6px;">Голень разогнута вперед</h4>
+            <p style="font-size:13px; color:#5c554e; margin-bottom:12px;">
+              Бедро опустилось на кушетку, но угол в колене меньше 80°, голень не может свободно свисать вертикально.
+            </p>
+          </div>
+          <div style="background:var(--bg-secondary); padding:10px; border-radius:8px; font-size:12px; line-height:1.4;">
+            <strong>Укорочена:</strong> Прямая мышца бедра (Rectus femoris).<br>
+            <strong>Решение:</strong> МФР-прокатка передней поверхности бедра роликом.
+          </div>
+        </div>
+
+        <div class="thomas-card">
+          <div>
+            <span class="thomas-tag info">Паттерн 3</span>
+            <h4 style="font-size:15px; margin-bottom:6px;">J-симптом (отведение бедра)</h4>
+            <p style="font-size:13px; color:#5c554e; margin-bottom:12px;">
+              При опускании нога самопроизвольно отводится наружу в сторону от срединной линии тела.
+            </p>
+          </div>
+          <div style="background:var(--bg-secondary); padding:10px; border-radius:8px; font-size:12px; line-height:1.4;">
+            <strong>Укорочена:</strong> Напрягатель широкой фасции (TFL).<br>
+            <strong>Решение:</strong> Релиз внешней линии бедра + стретч с приведением.
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:28%;">Тест Кендалла</th>
+              <th style="width:36%;">Действие тренера</th>
+              <th style="width:36%;">Интерпретация результата</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Пассивное разгибание колена</strong></td>
+              <td>Тренер бережно приподнимает стопу висящей ноги вверх (разгибает голень)</td>
+              <td>Если бедро сразу легло на кушетку — ограничение вызвано только <strong>прямой мышцей бедра</strong>. Если бедро осталось висеть — истинное укорочение в <strong>подвздошно-поясничной</strong>.</td>
+            </tr>
+            <tr>
+              <td><strong>Контроль поясничного просвета</strong></td>
+              <td>Ладонь тренера подложена под поясничный отдел клиентки</td>
+              <td>Если при попытке опустить ногу поясница отрывается от кушетки — клиентка компенсирует жесткость сгибателей усилением лордоза.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: PROTOCOL -->
+  <div id="tab-protocol" class="tab-content">
+    <div class="card">
+      <div class="card-title">
+        <div class="icon">🎯</div>
+        <h2>Биомеханический протокол: 4 шага к изоляции</h2>
+      </div>
+      <p style="color: var(--text-muted); font-size: 14px;">
+        Алгоритм построения упражнений исключает случайное включение поясничных разгибателей:
+      </p>
+
+      <div class="protocol-list">
+        <div class="protocol-item">
+          <div class="step-badge">1</div>
+          <div class="step-content">
+            <h3>Шаг 1. Снятие тонуса сгибателей (Стретч с «подкруткой» таза)</h3>
+            <p style="font-size:13.5px; color:#47413a; margin-top:4px;">
+              Обычные прогибы вперед только усугубляют передний наклон таза. В полувыпаде сначала выполните <strong>задний наклон таза</strong> (направьте лобковую кость к пупку), напрягите ягодицу сзади стоящей ноги и лишь затем подайте корпус вперед на 3–4 см.
+            </p>
+            <div class="key-cues">
+              <span class="cue-pill">⏱ 45–60 сек на сторону</span>
+              <span class="cue-pill">🎯 Натяжение в верхней трети бедра</span>
+              <span class="cue-pill">🚫 Без прогиба в пояснице</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="protocol-item">
+          <div class="step-badge">2</div>
+          <div class="step-content">
+            <h3>Шаг 2. Блокировка реберного контура («Ribs Down»)</h3>
+            <p style="font-size:13.5px; color:#47413a; margin-top:4px;">
+              На выдохе опустите нижние ребра вниз к тазу («застегните невидимый корсет»). Это натягивает поперечную и косые мышцы живота, формируя жесткий цилиндр кора и блокируя избыточное движение в пояснице.
+            </p>
+            <div class="key-cues">
+              <span class="cue-pill">🎯 Постоянная дистанция: «ребра — ости таза»</span>
+              <span class="cue-pill">💨 Глубокий выдох при подъеме ноги</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="protocol-item">
+          <div class="step-badge">3</div>
+          <div class="step-content">
+            <h3>Шаг 3. Разгибание в ТБС с внешней ротацией</h3>
+            <p style="font-size:13.5px; color:#47413a; margin-top:4px;">
+              Волокна большой ягодичной ориентированы под углом 45°. Чтобы включить максимум волокон, сочетайте разгибание с отведением и легкой внешней ротацией стопы/бедра наружу (на 15°–20°). Используйте кольцевой эспандер чуть выше колен.
+            </p>
+            <div class="key-cues">
+              <span class="cue-pill">📐 Угол разгибания не более 15°</span>
+              <span class="cue-pill">🔄 Разворот колена наружу</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="protocol-item">
+          <div class="step-badge">4</div>
+          <div class="step-content">
+            <h3>Шаг 4. Пиковая изометрическая фиксация (3 секунды)</h3>
+            <p style="font-size:13.5px; color:#47413a; margin-top:4px;">
+              При гиперлордозе мозг привык использовать инерцию хамстрингов и поясницы. Изометрическая пауза в точке максимального сокращения ягодицы «перезагружает» двигательный шаблон и активирует спящие нейромышечные синапсы.
+            </p>
+            <div class="key-cues">
+              <span class="cue-pill">🛑 Фиксация 3 секунды вверху</span>
+              <span class="cue-pill">🧠 100% мысленный фокус в центр ягодицы</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: PRACTICE & WORKOUT -->
+  <div id="tab-practice" class="tab-content">
+    <div class="interactive-workout">
+      <div class="workout-header">
+        <div>
+          <span style="font-size:12px; color:#f0a38e; text-transform:uppercase; font-weight:700;">Практический протокол:</span>
+          <h3 id="currentExName" style="font-size:20px; margin-top:4px; color:#fff;">1. Стретч сгибателей бедра с подкруткой</h3>
+        </div>
+        <div class="timer-box">
+          <div class="timer-display" id="timerDisplay">00:45</div>
+          <button class="timer-btn" id="timerToggleBtn" onclick="toggleTimer()">Старт таймера</button>
+        </div>
+      </div>
+
+      <div class="exercise-selector">
+        <button class="selector-btn active" onclick="loadExercise(0, this)">1. Стретч сгибателей</button>
+        <button class="selector-btn" onclick="loadExercise(1, this)">2. Ягодичный мост (Ribs Down)</button>
+        <button class="selector-btn" onclick="loadExercise(2, this)">3. Donkey Kicks на предплечьях</button>
+      </div>
+
+      <div style="background: rgba(255,255,255,0.06); padding: 14px 16px; border-radius: 10px; margin-bottom: 18px;">
+        <p id="exInstruction" style="font-size: 13.5px; color: #e4ddd4; line-height: 1.5;">
+          Встаньте в полувыпад на колене. Подкрутите таз назад («лобковую кость к пупку»), сожмите ягодицу сзади стоящей ноги и плавно сместитесь вперед всего на 3–4 см. Удерживайте натяжение, дышите ровно.
+        </p>
+      </div>
+
+      <div class="checklist-box">
+        <h4 style="font-size:14px; margin-bottom:10px; color:#f0a38e;">Чек-лист правильного выполнения:</h4>
+        <label class="checklist-item">
+          <input type="checkbox">
+          <span>Ребра «закрыты» и опущены вниз, живот в легком тонусе на протяжении всего подхода.</span>
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox">
+          <span>Поясничный отдел остается неподвижным, нет прогиба в верхней точке движения.</span>
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox">
+          <span>Ощущение четкого жжения и сокращения локализовано в ягодичной мышце.</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: TROUBLESHOOTING -->
+  <div id="tab-troubleshoot" class="tab-content">
+    <div class="card">
+      <div class="card-title">
+        <div class="icon">❓</div>
+        <h2>Где чувствуется нагрузка? Экспресс-диагностика</h2>
+      </div>
+      <p style="color:var(--text-muted); font-size:14px;">
+        Если клиентка сообщает о дискомфорте в неожиданных зонах, воспользуйтесь готовыми биомеханическими подсказками:
+      </p>
+
+      <div class="trouble-grid">
+        <div class="trouble-card" style="border:1px solid #f2d5ce; background:#fff9f7;">
+          <div>
+            <h4 style="color:var(--danger); font-size:15px; margin-bottom:6px;">⚠️ «Тянет или зажимает поясницу»</h4>
+            <p style="font-size:13px; color:#5c534c; margin-bottom:12px;">
+              <strong>Причина:</strong> Слишком большая амплитуда подъема. Вы превысили лимит 15° разгибания бедра и включили поясничные разгибатели.
+            </p>
+          </div>
+          <div style="background:#fff; padding:10px; border-radius:8px; border-left:3px solid var(--danger); font-size:12px; line-height:1.4;">
+            <strong>Коррекция:</strong> Уменьшите амплитуду на 30–40%! Сделайте предварительную подкрутку таза назад и сделайте паузу чуть раньше привычной высоты.
+          </div>
+        </div>
+
+        <div class="trouble-card" style="border:1px solid #f6e4cc; background:#fefaf3;">
+          <div>
+            <h4 style="color:var(--accent-amber); font-size:15px; margin-bottom:6px;">⚡ «Сводит заднюю поверхность бедра»</h4>
+            <p style="font-size:13px; color:#5c534c; margin-bottom:12px;">
+              <strong>Причина:</strong> Синергистическое доминирование хамстрингов. Стопы в ягодичном мосту стоят слишком далеко от таза.
+            </p>
+          </div>
+          <div style="background:#fff; padding:10px; border-radius:8px; border-left:3px solid var(--accent-amber); font-size:12px; line-height:1.4;">
+            <strong>Коррекция:</strong> Придвиньте стопы ближе (угол в коленях строго 90°), слегка разведите колени наружу и делайте упор преимущественно в пятку.
+          </div>
+        </div>
+
+        <div class="trouble-card" style="border:1px solid #d6e8dd; background:#f5faf6;">
+          <div>
+            <h4 style="color:var(--accent-sage); font-size:15px; margin-bottom:6px;">🔥 «Горит передняя поверхность бедра»</h4>
+            <p style="font-size:13px; color:#5c534c; margin-bottom:12px;">
+              <strong>Причина:</strong> Не расслабленный квадрицепс тянет таз вперед, мешая полноценному разгибанию бедра.
+            </p>
+          </div>
+          <div style="background:#fff; padding:10px; border-radius:8px; border-left:3px solid var(--accent-sage); font-size:12px; line-height:1.4;">
+            <strong>Коррекция:</strong> 2 минуты миофасциального релиза (МФР) роликом на переднюю поверхность бедра перед началом силового блока.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Научно-прикладной гайд • Кинезиологическая модель двигательного контроля и коррекции гиперлордоза.
+  </footer>
+</div>
+
+<script>
+  function switchTab(tabId, btn) {
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function updateSimulation() {
+    const tilt = parseInt(document.getElementById('tiltSlider').value);
+    const coreActive = document.getElementById('coreToggle').checked;
+
+    const pelvisGroup = document.getElementById('pelvisGroup');
+    pelvisGroup.setAttribute('transform', `translate(150, 170) rotate(${tilt})`);
+
+    const spinePath = document.getElementById('spinePath');
+    const spark = document.getElementById('compressionSpark');
+    const sparkBox = document.getElementById('sparkBox');
+    const sparkLabel = document.getElementById('sparkLabel');
+    const gluteVector = document.getElementById('gluteVector');
+    const feedback = document.getElementById('simFeedback');
+    const tiltText = document.getElementById('tiltValText');
+
+    let curveControlX = 150 + (tilt * 1.8);
+    if (!coreActive) curveControlX += 16;
+    spinePath.setAttribute('d', `M 150 40 Q ${curveControlX} 110 150 170`);
+
+    let gluteScore = 0;
+    let lumbarStress = 0;
+
+    if (tilt > 5) {
+      tiltText.innerText = `Передний наклон (+${tilt}°)`;
+      lumbarStress = Math.min(100, Math.round(50 + tilt * 2 + (coreActive ? -22 : 25)));
+      gluteScore = Math.max(10, Math.round(50 - tilt * 1.5 + (coreActive ? 18 : -15)));
+    } else if (tilt < -2) {
+      tiltText.innerText = `Задний наклон (${tilt}°)`;
+      lumbarStress = Math.max(8, Math.round(20 + Math.abs(tilt) * 1.2 + (coreActive ? -10 : 8)));
+      gluteScore = Math.min(96, Math.round(75 + Math.abs(tilt) * 1.6 + (coreActive ? 15 : 0)));
+    } else {
+      tiltText.innerText = `Нейтраль (${tilt}°)`;
+      lumbarStress = coreActive ? 10 : 32;
+      gluteScore = coreActive ? 92 : 68;
+    }
+
+    gluteScore = Math.min(100, Math.max(5, gluteScore));
+    lumbarStress = Math.min(100, Math.max(5, lumbarStress));
+
+    const gluteBar = document.getElementById('gluteBar');
+    const lumbarBar = document.getElementById('lumbarBar');
+    gluteBar.style.width = gluteScore + '%';
+    lumbarBar.style.width = lumbarStress + '%';
+    document.getElementById('gluteScoreText').innerText = gluteScore + '%';
+    document.getElementById('lumbarScoreText').innerText = lumbarStress + '%';
+
+    if (lumbarStress > 55) {
+      lumbarBar.style.backgroundColor = 'var(--danger)';
+      gluteBar.style.backgroundColor = 'var(--danger)';
+      spark.setAttribute('opacity', '0.9');
+      spark.setAttribute('r', '13');
+      sparkBox.style.display = 'block';
+      sparkLabel.style.display = 'block';
+      gluteVector.setAttribute('stroke', '#d49688');
+      gluteVector.setAttribute('stroke-width', '4');
+
+      feedback.style.background = 'var(--danger-soft)';
+      feedback.style.color = 'var(--danger)';
+      feedback.innerHTML = '⚠️ <strong>Критический лордоз:</strong> разгибание бедра заблокировано, поясница принимает на себя до 85% нагрузки.';
+    } else if (lumbarStress > 28) {
+      lumbarBar.style.backgroundColor = 'var(--accent-amber)';
+      gluteBar.style.backgroundColor = 'var(--accent-amber)';
+      spark.setAttribute('opacity', '0.35');
+      spark.setAttribute('r', '8');
+      sparkBox.style.display = 'none';
+      sparkLabel.style.display = 'none';
+      gluteVector.setAttribute('stroke', 'var(--accent-amber)');
+      gluteVector.setAttribute('stroke-width', '6');
+
+      feedback.style.background = 'var(--accent-amber-soft)';
+      feedback.style.color = 'var(--accent-amber)';
+      feedback.innerHTML = '⚡ <strong>Умеренная нагрузка:</strong> Подкрутите таз еще на 3° назад или включите кор, чтобы полностью разгрузить L5–S1.';
+    } else {
+      lumbarBar.style.backgroundColor = 'var(--accent-sage)';
+      gluteBar.style.backgroundColor = 'var(--accent-sage)';
+      spark.setAttribute('opacity', '0');
+      sparkBox.style.display = 'none';
+      sparkLabel.style.display = 'none';
+      gluteVector.setAttribute('stroke', 'var(--accent-sage)');
+      gluteVector.setAttribute('stroke-width', '9');
+
+      feedback.style.background = 'var(--accent-sage-soft)';
+      feedback.style.color = 'var(--accent-sage)';
+      feedback.innerHTML = '✅ <strong>Идеальная изоляция:</strong> Поясница полностью защищена. Вся работа выполняется большой ягодичной мышцей!';
+    }
+  }
+
+  // Timer & Exercises
+  const exercises = [
+    {
+      name: "1. Стретч сгибателей бедра с подкруткой",
+      duration: 45,
+      instruction: "Встаньте в полувыпад на колене. Подкрутите таз назад («лобковую кость к пупку»), сожмите ягодицу сзади стоящей ноги и плавно сместитесь вперед всего на 3–4 см. Удерживайте натяжение, дышите ровно."
+    },
+    {
+      name: "2. Ягодичный мост (Ribs Down)",
+      duration: 60,
+      instruction: "Лежа на спине, плотно прижмите поясницу к коврику на вдохе. На длинном выдохе поднимите таз, упираясь в пятки. В верхней точке зафиксируйтесь на 3 секунды. Ребра не должны подниматься выше уровня таза."
+    },
+    {
+      name: "3. Donkey Kicks на предплечьях",
+      duration: 45,
+      instruction: "Опуститесь на локти и колени. Сохраняя угол в колене 90°, выталкивайте пятку вверх строго до уровня параллели с полом. Никакого прогиба в пояснице быть не должно!"
+    }
+  ];
+
+  let currentExIndex = 0;
+  let timerSeconds = 45;
+  let timerInterval = null;
+
+  function loadExercise(index, btn) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    document.getElementById('timerToggleBtn').innerText = 'Старт таймера';
+    document.querySelectorAll('.selector-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    currentExIndex = index;
+    const ex = exercises[index];
+    document.getElementById('currentExName').innerText = ex.name;
+    document.getElementById('exInstruction').innerText = ex.instruction;
+    timerSeconds = ex.duration;
+    updateTimerDisplay();
+  }
+
+  function updateTimerDisplay() {
+    const mins = Math.floor(timerSeconds / 60);
+    const secs = timerSeconds % 60;
+    document.getElementById('timerDisplay').innerText = 
+      `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  }
+
+  function toggleTimer() {
+    const btn = document.getElementById('timerToggleBtn');
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      btn.innerText = 'Продолжить';
+    } else {
+      btn.innerText = 'Пауза';
+      timerInterval = setInterval(() => {
+        if (timerSeconds > 0) {
+          timerSeconds--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          btn.innerText = 'Завершено';
+          playBeep();
+        }
+      }, 1000);
+    }
+  }
+
+  function playBeep() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+      osc.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.3);
+    } catch(e) {}
+  }
+
+  // Init
+  updateSimulation();
+  updateTimerDisplay();
+</script>
+
+</body>
+</html>
