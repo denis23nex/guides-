@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Зеркальный экспресс-тест: Осанка & Ягодицы</title>
+<style>
+  :root {
+    --bg-page: #faf8f5;
+    --card-bg: #ffffff;
+    --text-main: #272421;
+    --text-muted: #6e6761;
+    --terracotta: #c86348;
+    --terracotta-hover: #b0533a;
+    --terracotta-soft: #fbf0ec;
+    --sage: #4f7961;
+    --sage-soft: #edf4ef;
+    --amber: #c58231;
+    --amber-soft: #fcf4ea;
+    --border: #e6dfd6;
+    --radius-card: 16px;
+    --radius-pill: 30px;
+    --shadow: 0 4px 14px rgba(0,0,0,0.04);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    padding: 24px 16px 60px;
+    line-height: 1.5;
+  }
+
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 22px;
+  }
+
+  .pill-badge {
+    display: inline-block;
+    background: var(--terracotta-soft);
+    color: var(--terracotta);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: 20px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .step-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  /* INTERACTIVE VISUAL SELECTOR (STEP 1) */
+  .interactive-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  @media (max-width: 520px) {
+    .interactive-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .type-card {
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .type-card:hover {
+    border-color: #d6b8ad;
+  }
+
+  .type-card.active {
+    border-color: var(--terracotta);
+    background: var(--terracotta-soft);
+    box-shadow: 0 4px 16px rgba(200,99,72,0.12);
+  }
+
+  .type-card.active-sage {
+    border-color: var(--sage);
+    background: var(--sage-soft);
+    box-shadow: 0 4px 16px rgba(79,121,97,0.12);
+  }
+
+  .avatar-svg {
+    width: 110px;
+    height: 140px;
+    margin: 4px 0 10px;
+  }
+
+  .type-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .type-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+    text-align: left;
+    width: 100%;
+  }
+
+  /* DIAGNOSIS BANNER */
+  .diag-banner {
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.45;
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+  }
+
+  /* EXERCISE INTERACTION (STEP 2) */
+  .plan-container {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .plan-container.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tab-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .tab-btn {
+    flex: 1;
+    background: var(--bg-page);
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    color: var(--text-muted);
+  }
+
+  .tab-btn.active {
+    background: #fff;
+    border-color: var(--terracotta);
+    color: var(--terracotta);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .exercise-visual-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .cue-box {
+    background: var(--bg-page);
+    border-left: 3px solid var(--terracotta);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-top: 10px;
+  }
+
+  .bio-svg-demo {
+    width: 100%;
+    max-height: 160px;
+    background: #faf8f5;
+    border-radius: 8px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* COMPACT TIMER */
+  .timer-card {
+    background: #221f1d;
+    color: #fff;
+    border-radius: var(--radius-card);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .timer-digit {
+    font-size: 48px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: #f7a994;
+    line-height: 1;
+    margin: 8px 0;
+  }
+
+  .timer-title {
+    font-size: 13px;
+    color: #cbbeaf;
+  }
+
+  .timer-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .btn-action {
+    border: none;
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+
+  .btn-action:active {
+    transform: scale(0.97);
+  }
+
+  .btn-play {
+    background: var(--terracotta);
+    color: #fff;
+  }
+
+  .btn-play:hover {
+    background: var(--terracotta-hover);
+  }
+
+  .btn-reset {
+    background: #393430;
+    color: #ded7ce;
+  }
+
+  /* SUCCESS CHECK */
+  .done-checklist {
+    margin-top: 14px;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    font-size: 12.5px;
+    color: #e6dfd6;
+    text-align: left;
+  }
+
+  .check-item input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--terracotta);
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <span class="pill-badge">Интерактивный экспресс-гид</span>
+    <h1>Куда наклонен твой таз?</h1>
+    <p class="subtitle">Подойди к зеркалу боком, расслабь живот и нажми на силуэт, похожий на тебя.</p>
+  </header>
+
+  <!-- STEP 1: VISUAL MIRROR TEST -->
+  <div class="card">
+    <div class="card-header">
+      <div class="step-circle">1</div>
+      <h2>Выбери свой силуэт в зеркале</h2>
+    </div>
+
+    <div class="interactive-grid">
+      <!-- Variant A: Anterior Tilt -->
+      <div class="type-card active" id="cardAnterior" onclick="setProfile('anterior')">
+        <svg class="avatar-svg" viewBox="0 0 100 140">
+          <!-- Head -->
+          <circle cx="50" cy="18" r="12" fill="#d2c5b7" />
+          <!-- Spine (curved lumbar) -->
+          <path d="M 50 30 Q 46 60 62 82 Q 45 92 48 135" fill="none" stroke="#272421" stroke-width="4" stroke-linecap="round" />
+          <!-- Belly pushed forward -->
+          <path d="M 50 55 Q 68 70 54 90" fill="none" stroke="#c86348" stroke-width="4" stroke-linecap="round" />
+          <!-- Glute pushed back (hyperlordosis) -->
+          <ellipse cx="38" cy="88" rx="14" ry="11" fill="#c86348" opacity="0.85" />
+          <!-- Indicator arrow -->
+          <text x="70" y="75" font-size="14">👉</text>
+        </svg>
+        <span class="type-title" style="color: var(--terracotta);">Наклон ВПЕРЕД</span>
+        <div class="type-desc">
+          • Ягодицы сильно торчат назад<br>
+          • Живот выпирает вперед<br>
+          • Глубокий прогиб в пояснице
+        </div>
+      </div>
+
+      <!-- Variant B: Posterior Tilt -->
+      <div class="type-card" id="cardPosterior" onclick="setProfile('posterior')">
+        <svg class="avatar-svg" viewBox="0 0 100 140">
+          <!-- Head -->
+          <circle cx="50" cy="18" r="12" fill="#d2c5b7" />
+          <!-- Spine (flat / tucked) -->
+          <path d="M 50 30 Q 52 65 49 85 Q 52 110 50 135" fill="none" stroke="#272421" stroke-width="4" stroke-linecap="round" />
+          <!-- Flat glute (tucked under) -->
+          <ellipse cx="44" cy="88" rx="8" ry="13" fill="#4f7961" opacity="0.85" />
+          <!-- Indicator arrow -->
+          <text x="68" y="92" font-size="14">👈</text>
+        </svg>
+        <span class="type-title" style="color: var(--sage);">Наклон НАЗАД</span>
+        <div class="type-desc">
+          • Ягодицы плоские («поджаты»)<br>
+          • Поясница прямая, без изгиба<br>
+          • Плечи и таз уходят вперед
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Bio-Feedback Prompt -->
+    <div id="diagPrompt" class="diag-banner" style="background: var(--terracotta-soft); color: #8e3621;">
+      <span>💡</span>
+      <span id="diagText"><strong>Диагноз: Гиперлордоз.</strong> Сгибатели бедра зажаты, ягодицы «выключены», а поясница берет на себя весь удар. Начни с растяжки передней поверхности!</span>
+    </div>
+  </div>
+
+  <!-- STEP 2: DYNAMIC WORKOUT PLAN -->
+  <div class="card">
+    <div class="card-header">
+      <div class="step-circle">2</div>
+      <h2 id="planHeaderTitle">Твоя 2-минутная коррекция: Наклон вперед</h2>
+    </div>
+
+    <!-- Exercise Toggle Tabs -->
+    <div class="tab-buttons">
+      <button class="tab-btn active" id="tabEx1" onclick="selectEx(0)">1. Снять зажим (45с)</button>
+      <button class="tab-btn" id="tabEx2" onclick="selectEx(1)">2. Включить ягодицу (45с)</button>
+    </div>
+
+    <!-- Interactive Visual Exercise Showcase -->
+    <div class="exercise-visual-card">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <span id="exBadge" style="font-size: 11px; font-weight: 700; color: var(--terracotta); text-transform: uppercase;">Шаг 1 • Растяжка</span>
+        <span style="font-size: 12px; color: var(--text-muted);">⏱ 45 секунд</span>
+      </div>
+
+      <h3 id="exName" style="font-size: 16px; margin: 6px 0 8px;">Выпад с «подкруткой» копчика</h3>
+      
+      <!-- Interactive SVG exercise animation/schematic -->
+      <div class="bio-svg-demo">
+        <svg id="exSvg" width="260" height="130" viewBox="0 0 260 130">
+          <!-- Dynamically populated by JS -->
+        </svg>
+      </div>
+
+      <p id="exDesc" style="font-size: 13.5px; color: #403b36; line-height: 1.45;">
+        Опустись на одно колено. <strong>Подкрути таз под себя</strong> (как будто прячешь хвост), сожми ягодицу сзади стоящей ноги и плавно подайся вперед всего на 3 см.
+      </p>
+
+      <div class="cue-box" id="exCue">
+        🎯 Где чувствуем: мощно тянет переднюю поверхность бедра сзади стоящей ноги. Спина ровная!
+      </div>
+    </div>
+
+    <!-- INTEGRATED TIMER -->
+    <div class="timer-card">
+      <div class="timer-title" id="timerExTitle">Упражнение: Выпад с подкруткой копчика</div>
+      <div class="timer-digit" id="timerValue">00:45</div>
+      
+      <div class="timer-controls">
+        <button class="btn-action btn-play" id="btnPlay" onclick="toggleTimer()">Старт 45 сек</button>
+        <button class="btn-action btn-reset" onclick="resetTimer()">Сброс</button>
+      </div>
+
+      <div class="done-checklist">
+        <label class="check-item">
+          <input type="checkbox" id="chk1">
+          <span>Спина не прогибается, живот слегка подтянут</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="chk2">
+          <span>Ощущение работы именно в целевой зоне</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Exercises Database
+  const plans = {
+    anterior: {
+      title: "Твоя 2-минутная коррекция: Наклон вперед",
+      diag: "<strong>Диагноз: Наклон таза вперед (гиперлордоз).</strong> Сгибатели бедра натянуты, ягодицы отключены рефлекторно, а поясница перегружена. Сначала расслабляем бедро, затем активируем ягодицу!",
+      color: "var(--terracotta)",
+      softBg: "var(--terracotta-soft)",
+      darkColor: "#8e3621",
+      exercises: [
+        {
+          name: "Выпад с «подкруткой» копчика",
+          badge: "Шаг 1 • Расслабление сгибателей",
+          duration: 45,
+          desc: "Опустись в выпад на одно колено. <strong>Подкрути таз под себя</strong> (лобковую кость к пупку), напряги ягодицу и мягко качнись на 3 см вперед. Поясницу держи абсолютно плоской.",
+          cue: "🎯 Где чувствуем: жгучее натяжение в верхней трети переднего бедра. Поясница отдыхает!",
+          svg: `
+            <!-- Ground -->
+            <line x1="20" y1="115" x2="240" y2="115" stroke="#ddd" stroke-width="2" />
+            <!-- Front leg -->
+            <polyline points="150,115 150,85 115,85" fill="none" stroke="#666" stroke-width="5" stroke-linecap="round" />
+            <!-- Back leg on knee -->
+            <polyline points="75,115 75,85 115,85" fill="none" stroke="#c86348" stroke-width="6" stroke-linecap="round" />
+            <!-- Torso upright with tucked pelvis -->
+            <line x1="115" y1="85" x2="115" y2="35" stroke="#272421" stroke-width="6" stroke-linecap="round" />
+            <circle cx="115" cy="22" r="10" fill="#d2c5b7" />
+            <!-- Tuck pelvis cue arrow -->
+            <path d="M 125,75 Q 135,85 115,95" fill="none" stroke="#c86348" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)" />
+            <text x="135" y="85" font-size="11" font-weight="700" fill="#c86348">Копчик под себя</text>
+          `
+        },
+        {
+          name: "Ягодичный мост с плоской поясницей",
+          badge: "Шаг 2 • Включение ягодиц",
+          duration: 45,
+          desc: "Ложись на спину, прижми поясницу к полу. На выдохе опусти нижние ребра вниз и подними таз, упираясь пятками. <strong>Не выгибай спину дугой!</strong> Сожми ягодицы вверху на 2 секунды.",
+          cue: "🎯 Где чувствуем: 100% сокращение центра ягодиц. Ни малейшей боли в пояснице!",
+          svg: `
+            <!-- Ground -->
+            <line x1="20" y1="115" x2="240" y2="115" stroke="#ddd" stroke-width="2" />
+            <!-- Head & Shoulders on ground -->
+            <circle cx="50" cy="105" r="9" fill="#d2c5b7" />
+            <line x1="50" y1="112" x2="90" y2="112" stroke="#272421" stroke-width="6" stroke-linecap="round" />
+            <!-- Raised straight bridge: Shoulder to knee -->
+            <line x1="90" y1="112" x2="160" y2="65" stroke="#c86348" stroke-width="7" stroke-linecap="round" />
+            <!-- Legs down to feet -->
+            <polyline points="160,65 190,115" fill="none" stroke="#666" stroke-width="6" stroke-linecap="round" />
+            <!-- Fire spark on glute -->
+            <circle cx="135" cy="85" r="8" fill="#c86348" opacity="0.9" />
+            <text x="110" y="60" font-size="11" font-weight="700" fill="#c86348">Сжать ягодицы!</text>
+          `
+        }
+      ]
+    },
+    posterior: {
+      title: "Твоя 2-минутная коррекция: Наклон назад",
+      diag: "<strong>Диагноз: Наклон таза назад (плоская поясница).</strong> Задняя поверхность бедра зажата и тянет таз вниз, стирая естественный прогиб. Учим таз отводиться назад и включаем верх ягодиц!",
+      color: "var(--sage)",
+      softBg: "var(--sage-soft)",
+      darkColor: "#284d36",
+      exercises: [
+        {
+          name: "Наклон к стене (Хинж) с мягкими коленями",
+          badge: "Шаг 1 • Раскрытие задней цепи",
+          duration: 45,
+          desc: "Встань спиной в 15 см от стены. Колени слегка согнуты. Тянись тазом назад, пока ягодицы не коснутся стены. Спина прямая, сохраняй легкий естественный изгиб в пояснице.",
+          cue: "🎯 Где чувствуем: приятное натяжение под ягодицами и свободное отведение таза назад.",
+          svg: `
+            <!-- Wall line -->
+            <line x1="50" y1="10" x2="50" y2="120" stroke="#aaa" stroke-dasharray="4" stroke-width="3" />
+            <!-- Feet -->
+            <line x1="80" y1="115" x2="180" y2="115" stroke="#ddd" stroke-width="2" />
+            <!-- Lower legs -->
+            <line x1="120" y1="115" x2="115" y2="80" stroke="#666" stroke-width="5" stroke-linecap="round" />
+            <!-- Thigh reaching back to wall -->
+            <line x1="115" y1="80" x2="55" y2="70" stroke="#4f7961" stroke-width="6" stroke-linecap="round" />
+            <!-- Torso leaning forward flat -->
+            <line x1="55" y1="70" x2="110" y2="40" stroke="#272421" stroke-width="5" stroke-linecap="round" />
+            <circle cx="118" cy="35" r="9" fill="#d2c5b7" />
+            <text x="65" y="95" font-size="11" font-weight="700" fill="#4f7961">Таз тянется к стене</text>
+          `
+        },
+        {
+          name: "Широкий мост с разведением колен",
+          badge: "Шаг 2 • Формирование объема",
+          duration: 45,
+          desc: "Поставь стопы шире плеч, разверни носки наружу. Поднимай таз и в верхней точке акцентированно дави коленями в стороны. Это включает среднюю ягодичную и поднимает низ ягодиц.",
+          cue: "🎯 Где чувствуем: огонь в боковых и верхних отделах ягодиц.",
+          svg: `
+            <!-- Ground -->
+            <line x1="20" y1="115" x2="240" y2="115" stroke="#ddd" stroke-width="2" />
+            <circle cx="50" cy="105" r="9" fill="#d2c5b7" />
+            <line x1="50" y1="112" x2="90" y2="112" stroke="#272421" stroke-width="6" stroke-linecap="round" />
+            <line x1="90" y1="112" x2="160" y2="70" stroke="#4f7961" stroke-width="7" stroke-linecap="round" />
+            <polyline points="160,70 195,115" fill="none" stroke="#666" stroke-width="6" stroke-linecap="round" />
+            <!-- Arrows outwards -->
+            <text x="145" y="55" font-size="12">↔️</text>
+            <text x="130" y="45" font-size="11" font-weight="700" fill="#4f7961">Колени в стороны!</text>
+          `
+        }
+      ]
+    }
+  };
+
+  let currentProfile = 'anterior';
+  let currentExerciseIndex = 0;
+  let timerSeconds = 45;
+  let timerInterval = null;
+
+  function setProfile(type) {
+    currentProfile = type;
+    const cardA = document.getElementById('cardAnterior');
+    const cardB = document.getElementById('cardPosterior');
+    const banner = document.getElementById('diagPrompt');
+    const diagText = document.getElementById('diagText');
+    const planTitle = document.getElementById('planHeaderTitle');
+
+    if (type === 'anterior') {
+      cardA.className = "type-card active";
+      cardB.className = "type-card";
+      banner.style.background = plans.anterior.softBg;
+      banner.style.color = plans.anterior.darkColor;
+      diagText.innerHTML = plans.anterior.diag;
+      planTitle.innerText = plans.anterior.title;
+    } else {
+      cardA.className = "type-card";
+      cardB.className = "type-card active-sage";
+      banner.style.background = plans.posterior.softBg;
+      banner.style.color = plans.posterior.darkColor;
+      diagText.innerHTML = plans.posterior.diag;
+      planTitle.innerText = plans.posterior.title;
+    }
+
+    selectEx(0);
+  }
+
+  function selectEx(index) {
+    currentExerciseIndex = index;
+    const currentData = plans[currentProfile].exercises[index];
+
+    // Buttons UI
+    document.getElementById('tabEx1').className = index === 0 ? "tab-btn active" : "tab-btn";
+    document.getElementById('tabEx2').className = index === 1 ? "tab-btn active" : "tab-btn";
+
+    // Text & SVG content
+    document.getElementById('exBadge').innerText = currentData.badge;
+    document.getElementById('exBadge').style.color = plans[currentProfile].color;
+    document.getElementById('exName').innerText = currentData.name;
+    document.getElementById('exDesc').innerHTML = currentData.desc;
+    document.getElementById('exCue').innerHTML = currentData.cue;
+    document.getElementById('exCue').style.borderLeftColor = plans[currentProfile].color;
+    document.getElementById('exSvg').innerHTML = currentData.svg;
+
+    // Timer card labels
+    document.getElementById('timerExTitle').innerText = "Упражнение: " + currentData.name;
+    
+    // Reset timer to full duration
+    resetTimer(currentData.duration);
+  }
+
+  function updateTimerDisplay() {
+    let m = Math.floor(timerSeconds / 60);
+    let s = timerSeconds % 60;
+    document.getElementById('timerValue').innerText = 
+      (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+  }
+
+  function toggleTimer() {
+    const btn = document.getElementById('btnPlay');
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      btn.innerText = "Продолжить";
+    } else {
+      btn.innerText = "Пауза";
+      timerInterval = setInterval(() => {
+        if (timerSeconds > 0) {
+          timerSeconds--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          btn.innerText = "Отлично! Сделано";
+          ringTone();
+        }
+      }, 1000);
+    }
+  }
+
+  function resetTimer(seconds = 45) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerSeconds = seconds;
+    updateTimerDisplay();
+    document.getElementById('btnPlay').innerText = "Старт " + seconds + " сек";
+    document.getElementById('chk1').checked = false;
+    document.getElementById('chk2').checked = false;
+  }
+
+  function ringTone() {
+    try {
+      let ctx = new (window.AudioContext || window.webkitAudioContext)();
+      let osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(659.25, ctx.currentTime); // E5
+      osc.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.35);
+    } catch(e) {}
+  }
+
+  // Initial load
+  setProfile('anterior');
+</script>
+
+</body>
+</html>
