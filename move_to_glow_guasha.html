@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Move to Glow | 5-Минутный Экспресс-Гуаша</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #FAF6F0;
+      --surface: #FFFFFF;
+      --card-bg: #F7EFE8;
+      --primary: #C26343;
+      --primary-hover: #A85033;
+      --primary-soft: #F4E8DF;
+      --text: #2D2724;
+      --text-muted: #7A6F67;
+      --border: #E8DDD3;
+      --success: #6A8E72;
+      --accent: #D98263;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(74, 52, 40, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      padding: 30px 20px;
+      text-align: center;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .slogan {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: var(--primary-soft);
+      padding: 4px 14px;
+      border-radius: 30px;
+      color: var(--primary);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--text);
+      max-width: 800px;
+      margin: 0 auto 10px;
+    }
+
+    .header-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    main {
+      max-width: 1080px;
+      margin: 40px auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: col;
+      flex-direction: column;
+      gap: 50px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+
+    @media (max-width: 840px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+      h1 {
+        font-size: 1.9rem;
+      }
+    }
+
+    /* CARD STYLING */
+    .glow-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 28px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* PRACTICE & TIMER SECTION */
+    .trainer-wrapper {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 30px;
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 30px;
+      align-items: center;
+    }
+
+    @media (max-width: 860px) {
+      .trainer-wrapper {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .timer-panel {
+      text-align: center;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 30px 20px;
+      border: 1px solid var(--border);
+    }
+
+    .clock {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      font-variant-numeric: tabular-nums;
+      margin: 10px 0;
+      letter-spacing: -1px;
+    }
+
+    .timer-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: #FFFFFF;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: #F8F4EE;
+      color: var(--text);
+    }
+
+    /* VISUAL VECTOR DISPLAY */
+    .visual-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 380px;
+      text-align: center;
+    }
+
+    .svg-container {
+      width: 170px;
+      height: 170px;
+      margin-bottom: 20px;
+      background: var(--primary-soft);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed var(--accent);
+      position: relative;
+    }
+
+    .anim-pulse {
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .step-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      background: var(--primary-soft);
+      color: var(--primary);
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .step-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .step-text {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin-bottom: 15px;
+    }
+
+    .step-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background: var(--primary);
+      transform: scale(1.25);
+    }
+
+    /* INTERACTIVE SELECTOR */
+    .selector-item {
+      padding: 14px 18px;
+      background: var(--bg);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .selector-item:hover {
+      border-color: var(--accent);
+      background: #FFFFFF;
+    }
+
+    .selector-item.selected {
+      border-color: var(--primary);
+      background: #FFF7F3;
+    }
+
+    .selector-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 3px;
+    }
+
+    .selector-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .badge-tag {
+      float: right;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+    .badge-green { background: #E5F3E8; color: var(--success); }
+    .badge-red { background: #FDE8E5; color: #C24343; }
+
+    /* CHECKLIST */
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 0.95rem;
+      user-select: none;
+    }
+
+    .checklist-item:last-child {
+      border-bottom: none;
+    }
+
+    .checkbox-box {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .checklist-item.done .checkbox-box {
+      background: var(--primary);
+    }
+
+    .checklist-item.done .checkbox-box::after {
+      content: "✓";
+      color: #FFF;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .checklist-item.done span {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">Move to Glow | Пространство Даши</div>
+    <div class="slogan">тело • лицо • свобода</div>
+    <h1>Экспресс-реанимация после бессонной ночи</h1>
+    <p class="header-desc">
+      5-минутный синхронизированный лимфодренажный протокол Гуаша: лифтинг, свежесть и чистая кожа без высыпаний.
+    </p>
+  </header>
+
+  <main>
+    
+    <!-- ИНТЕРАКТИВНЫЙ ТРЕНАЖЕР С ТАЙМЕРОМ И АНИМАЦИЕЙ -->
+    <div class="trainer-wrapper">
+      <div class="timer-panel">
+        <div class="step-badge" id="stepIndicator">Шаг 1 из 5</div>
+        <div class="clock" id="timerDisplay">01:00</div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Время текущего этапа</div>
+        
+        <div class="timer-controls">
+          <button class="btn" id="startBtn" onclick="toggleTimer()">
+            <span id="playIcon">▶</span> <span id="btnText">Старт</span>
+          </button>
+          <button class="btn btn-secondary" onclick="resetTimer()">↺</button>
+        </div>
+      </div>
+
+      <div class="visual-screen">
+        <div class="svg-container anim-pulse" id="svgContainer"></div>
+        <div class="step-badge" id="visualMinuteBadge">Минута 1</div>
+        <div class="step-title" id="visualStepTitle">Открытие лимфотока</div>
+        <div class="step-text" id="visualStepDesc">
+          Мягкий помпаж ключичных ямок (7–10 пульсаций) и отводящие движения скребком под углом 15° сверху вниз по шее.
+        </div>
+
+        <div class="step-dots">
+          <div class="dot active" onclick="setStep(0)"></div>
+          <div class="dot" onclick="setStep(1)"></div>
+          <div class="dot" onclick="setStep(2)"></div>
+          <div class="dot" onclick="setStep(3)"></div>
+          <div class="dot" onclick="setStep(4)"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ДВЕ КОЛОНКИ: БЕЗОПАСНАЯ БАЗА И ЧЕКЛИСТ -->
+    <div class="grid-2">
+      
+      <!-- Интерактивный гид по маслам -->
+      <div class="glow-card">
+        <h2 class="card-title">🌿 Подбор скользящей базы</h2>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
+          Главная причина утренних воспалений — неправильное масло. Выбери средство для проверки:
+        </p>
+
+        <div class="selector-item selected" onclick="selectOil(this, 'safe-squalane')">
+          <span class="badge-tag badge-green">Идеально</span>
+          <div class="selector-name">100% Растительный Сквалан</div>
+          <div class="selector-desc">0 комедогенности. Мгновенно смягчает, не забивает даже уставшие поры.</div>
+        </div>
+
+        <div class="selector-item" onclick="selectOil(this, 'safe-jojoba')">
+          <span class="badge-tag badge-green">Идеально</span>
+          <div class="selector-name">Масло Жожоба</div>
+          <div class="selector-desc">Биомиметик человеческого себума. Прекрасно питает, снижает реактивность.</div>
+        </div>
+
+        <div class="selector-item" onclick="selectOil(this, 'safe-gel')">
+          <span class="badge-tag badge-green">Альтернатива</span>
+          <div class="selector-name">Густой гель алоэ / центеллы</div>
+          <div class="selector-desc">Для ультра-чувствительной или реактивной кожи с активными акне.</div>
+        </div>
+
+        <div class="selector-item" onclick="selectOil(this, 'danger-coco')">
+          <span class="badge-tag badge-red">Табу (Комедогенно)</span>
+          <div class="selector-name">Кокосовое масло / Масло зародышей пшеницы</div>
+          <div class="selector-desc">Окклюзия 4-5 уровня. Гарантированные подкожные комедоны на 2-й день.</div>
+        </div>
+
+        <div id="oilFeedback" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: #F8F5F1; font-size: 0.85rem; color: #523E39; border-left: 3px solid var(--primary);">
+          ✨ <strong>Сквалан:</strong> Превосходный выбор! Обеспечивает шелковое скольжение и полностью смывается мягкой пенкой.
+        </div>
+      </div>
+
+      <!-- Чек-лист чистой кожи -->
+      <div class="glow-card">
+        <h2 class="card-title">🧼 Чек-лист: Гуаша без прыщиков</h2>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
+          Отмечай шаги чистоты каждый раз перед началом массажа:
+        </p>
+
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checkbox-box"></div>
+          <span>Вымыть скребок с мылом перед нанесением</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checkbox-box"></div>
+          <span>Нанести достаточное количество масла (без трения кожи)</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checkbox-box"></div>
+          <span>Держать угол пластины 15° (почти параллельно лицу)</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checkbox-box"></div>
+          <span>Обойти воспаленные зоны и прыщики стороной</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checkbox-box"></div>
+          <span><strong>Обязательно:</strong> смыть масло пенкой после массажа!</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checkbox-box"></div>
+          <span>Увлажнить кожу базовым тоником и легким кремом</span>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer>
+    «5 минут осознанной заботы каждое утро дают более стойкий результат, чем часы редких процедур. Ты у себя одна — будь к себе бережна.»<br>
+    <strong>MOVE TO GLOW</strong> • Тело • Лицо • Свобода
+  </footer>
+
+  <script>
+    const steps = [
+      {
+        minute: "Минута 1",
+        title: "Открытие лимфотока",
+        desc: "Бесполезно гнать воду, если «слив» заперт. Сделай 7-10 мягких помпажей пальцами в надключичных ямках, затем скребком проведи по боковой стороне шеи вниз к ключице.",
+        svg: `<svg width="90" height="90" viewBox="0 0 52 50" fill="none">
+          <ellipse cx="26" cy="11" rx="9" ry="8" stroke="#A89A8E" stroke-width="1.2" fill="#FAF6F0"/>
+          <path d="M21 19 L21 34 Q26 35 31 34 L31 19" stroke="#A89A8E" stroke-width="1.2" fill="none"/>
+          <path d="M11 41 Q26 37 41 41" stroke="#C26343" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="18" cy="39" r="3" fill="#C26343"/>
+          <circle cx="34" cy="39" r="3" fill="#C26343"/>
+          <path d="M19 22 L19 33" stroke="#C26343" stroke-width="2" stroke-linecap="round"/>
+          <path d="M17 30 L19 34 L21 30" stroke="#C26343" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M33 22 L33 33" stroke="#C26343" stroke-width="2" stroke-linecap="round"/>
+          <path d="M31 30 L33 34 L35 30" stroke="#C26343" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`
+      },
+      {
+        minute: "Минута 2",
+        title: "Четкий овал лица",
+        desc: "Выемкой скребка («сердечком») обхвати челюсть. Придерживая подбородок другой рукой, веди камень к мочке уха с вибрацией на финише и сливом вниз по шее.",
+        svg: `<svg width="90" height="90" viewBox="0 0 52 50" fill="none">
+          <path d="M14 16 L26 35 L38 16" stroke="#A89A8E" stroke-width="1.2" fill="#FAF6F0"/>
+          <path d="M26 33 Q33 31 39 20" stroke="#C26343" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+          <path d="M36 19 L40 19 L39 23" stroke="#C26343" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="41" cy="18" r="3" fill="#F4E8DF" stroke="#C26343" stroke-width="1.5"/>
+          <path d="M23 35 C23 33 25 32 26 33 C27 32 29 33 29 35 C29 37 26 39 26 39 C26 39 23 37 23 35 Z" fill="#C26343"/>
+        </svg>`
+      },
+      {
+        minute: "Минута 3",
+        title: "Скульптурирование скул",
+        desc: "Плоской стороной скребка под углом 15° веди от крыла носа к козелку уха. Плавное движение снимает утренний отек со щек и возвращает румянец.",
+        svg: `<svg width="90" height="90" viewBox="0 0 52 50" fill="none">
+          <path d="M26 8 C16 8 14 20 14 30 C14 38 20 44 26 44 C32 44 38 38 38 30 C38 20 36 8 26 8 Z" stroke="#D1C4B8" stroke-width="1" fill="#FAF6F0"/>
+          <path d="M26 27 Q33 25 40 21" stroke="#C26343" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+          <path d="M37 20 L41 20 L40 24" stroke="#C26343" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M25 32 Q32 30 38 27" stroke="#E3947B" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+        </svg>`
+      },
+      {
+        minute: "Минута 4",
+        title: "Распахнутый взгляд",
+        desc: "Скругленным кончиком без нажима скользи по костному краю под глазом к виску. Затем вдоль брови к виску, мягко приподнимая её кончик.",
+        svg: `<svg width="90" height="90" viewBox="0 0 52 50" fill="none">
+          <path d="M16 26 Q26 18 36 26 Q26 34 16 26 Z" stroke="#A89A8E" stroke-width="1.4" fill="#FAF6F0"/>
+          <circle cx="26" cy="26" r="3.5" fill="#C26343"/>
+          <path d="M14 16 Q26 11 38 15" stroke="#C26343" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M36 13 L39 15 L36 17" stroke="#C26343" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M17 31 Q26 35 36 30" stroke="#E3947B" stroke-width="1.8" stroke-dasharray="2 1.5" stroke-linecap="round" fill="none"/>
+        </svg>`
+      },
+      {
+        minute: "Минута 5",
+        title: "Лоб и финальный дренаж",
+        desc: "Разгладь лоб снизу вверх к линии роста волос. Заверши 3 полными круговыми сбросами: от центра лба через висок и шею прямо в ключицы.",
+        svg: `<svg width="90" height="90" viewBox="0 0 52 50" fill="none">
+          <path d="M14 36 C14 20 18 10 26 10 C34 10 38 20 38 36" stroke="#D1C4B8" stroke-width="1" fill="#FAF6F0"/>
+          <path d="M26 30 L26 16" stroke="#C26343" stroke-width="2" stroke-linecap="round"/>
+          <path d="M20 32 L20 20" stroke="#E3947B" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M32 32 L32 20" stroke="#E3947B" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M35 24 Q44 32 40 44" stroke="#C26343" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 2" fill="none"/>
+          <path d="M38 41 L40 45 L43 42" stroke="#C26343" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>`
+      }
+    ];
+
+    let currentStep = 0;
+    let timeLeft = 60;
+    let timerId = null;
+    let isRunning = false;
+
+    function renderStep() {
+      const step = steps[currentStep];
+      document.getElementById('stepIndicator').innerText = `Шаг ${currentStep + 1} из 5`;
+      document.getElementById('visualMinuteBadge').innerText = step.minute;
+      document.getElementById('visualStepTitle').innerText = step.title;
+      document.getElementById('visualStepDesc').innerText = step.desc;
+      document.getElementById('svgContainer').innerHTML = step.svg;
+
+      const dots = document.querySelectorAll('.dot');
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === currentStep);
+      });
+    }
+
+    function updateDisplay() {
+      const m = Math.floor(timeLeft / 60);
+      const s = timeLeft % 60;
+      document.getElementById('timerDisplay').innerText = 
+        `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function toggleTimer() {
+      if (isRunning) {
+        pauseTimer();
+      } else {
+        startTimer();
+      }
+    }
+
+    function startTimer() {
+      isRunning = true;
+      document.getElementById('btnText').innerText = "Пауза";
+      document.getElementById('playIcon').innerText = "⏸";
+
+      timerId = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          updateDisplay();
+        } else {
+          if (currentStep < 4) {
+            currentStep++;
+            timeLeft = 60;
+            renderStep();
+            updateDisplay();
+            playSoftTone();
+          } else {
+            pauseTimer();
+            alert("Поздравляем! 5-минутный ритуал заботы завершен. Не забудь умыться с пенкой!");
+            resetTimer();
+          }
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      isRunning = false;
+      clearInterval(timerId);
+      document.getElementById('btnText').innerText = "Старт";
+      document.getElementById('playIcon').innerText = "▶";
+    }
+
+    function resetTimer() {
+      pauseTimer();
+      timeLeft = 60;
+      updateDisplay();
+    }
+
+    function setStep(idx) {
+      currentStep = idx;
+      resetTimer();
+      renderStep();
+    }
+
+    function playSoftTone() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(528, ctx.currentTime);
+        gain.gain.setValueAtTime(0.1, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.8);
+      } catch (e) {
+      }
+    }
+
+    function selectOil(el, type) {
+      document.querySelectorAll('.selector-item').forEach(item => item.classList.remove('selected'));
+      el.classList.add('selected');
+      const box = document.getElementById('oilFeedback');
+      
+      if (type === 'safe-squalane') {
+        box.innerHTML = "✨ <strong>Сквалан:</strong> Идеально! Нулевой индекс забивания пор, идеальное скольжение для уставшей кожи.";
+        box.style.borderLeftColor = "var(--primary)";
+      } else if (type === 'safe-jojoba') {
+        box.innerHTML = "✨ <strong>Масло жожоба:</strong> Отличный выбор. Снимает стянутость, восстанавливает липидный барьер после недосыпа.";
+        box.style.borderLeftColor = "var(--primary)";
+      } else if (type === 'safe-gel') {
+        box.innerHTML = "💧 <strong>Гель алоэ / центелла:</strong> Прекрасно успокаивает отеки. Наноси толстым слоем, чтобы скребок не тянул кожу.";
+        box.style.borderLeftColor = "var(--success)";
+      } else if (type === 'danger-coco') {
+        box.innerHTML = "⚠️ <strong>Осторожно!</strong> Тяжелые масла образуют пленку и закупорят поры, спровоцировав прыщи уже к завтрашнему утру.";
+        box.style.borderLeftColor = "#C24343";
+      }
+    }
+
+    function toggleCheck(el) {
+      el.classList.toggle('done');
+    }
+
+    renderStep();
+    updateDisplay();
+  </script>
+</body>
+</html>
