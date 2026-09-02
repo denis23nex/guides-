@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Биомеханика: Наклон таза и разгибание бедра</title>
+<style>
+  :root {
+    --bg-dark: #0b0f16;
+    --panel-bg: rgba(23, 32, 45, 0.75);
+    --panel-border: rgba(90, 115, 145, 0.3);
+    --inner-card: rgba(14, 21, 31, 0.7);
+    --inner-border: rgba(100, 130, 165, 0.2);
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --accent-blue: #38bdf8;
+    --green-active: #22c55e;
+    --green-glow: rgba(34, 197, 94, 0.45);
+    --red-active: #ef4444;
+    --red-glow: rgba(239, 68, 68, 0.5);
+    --amber-active: #f59e0b;
+    --track-bg: #1e293b;
+    --radius-lg: 16px;
+    --radius-md: 10px;
+    --shadow-panel: 0 12px 35px rgba(0, 0, 0, 0.55);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  body {
+    background: radial-gradient(circle at 50% 20%, #131c2a 0%, #080b10 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 24px 16px 60px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .app-container {
+    width: 100%;
+    max-width: 1120px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .badge-3d {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: var(--accent-blue);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+    color: #fff;
+  }
+
+  .subtitle {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+  }
+
+  /* MAIN 3D DASHBOARD CONTAINER (Matching user screenshot) */
+  .dashboard-main {
+    background: var(--panel-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-panel);
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 280px 1fr 310px;
+    gap: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (max-width: 980px) {
+    .dashboard-main {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* SUB-COLUMNS */
+  .col-card {
+    background: var(--inner-card);
+    border: 1px solid var(--inner-border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .col-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* LEFT COLUMN: BIO-MECHANICAL MOVEMENTS */
+  .movement-box {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--inner-border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .movement-box:hover {
+    border-color: rgba(56, 189, 248, 0.4);
+    background: rgba(30, 41, 59, 0.6);
+  }
+
+  .movement-box.active-green {
+    border-color: var(--green-active);
+    background: rgba(34, 197, 94, 0.1);
+  }
+
+  .movement-box.active-red {
+    border-color: var(--red-active);
+    background: rgba(239, 68, 68, 0.1);
+  }
+
+  .box-label {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .box-label .pure { color: #4ade80; }
+  .box-label .danger { color: #f87171; }
+  .box-label .core { color: #38bdf8; }
+
+  .diagram-svg-thumb {
+    width: 100%;
+    height: 90px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* CENTER COLUMN: LIVE MOVING 3D ANATOMICAL VIEWPORT */
+  .center-viewport {
+    position: relative;
+    background: radial-gradient(circle at 50% 45%, #19273c 0%, #0c1421 100%);
+    border: 1px solid rgba(120, 160, 200, 0.25);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    min-height: 480px;
+  }
+
+  .viewport-header {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+  }
+
+  .viewport-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #e2e8f0;
+  }
+
+  .play-toggle-btn {
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: var(--accent-blue);
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .play-toggle-btn:hover {
+    background: var(--accent-blue);
+    color: #0b0f16;
+  }
+
+  .human-interactive-svg {
+    width: 100%;
+    max-width: 320px;
+    height: 420px;
+    margin-top: 24px;
+  }
+
+  /* RIGHT COLUMN: CONTROLS & GAUGES */
+  .control-group {
+    margin-bottom: 16px;
+  }
+
+  .control-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #f1f5f9;
+    margin-bottom: 8px;
+  }
+
+  .angle-pill {
+    background: rgba(56, 189, 248, 0.2);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: var(--accent-blue);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .slider-custom {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: #334155;
+    outline: none;
+    margin: 10px 0;
+  }
+
+  .slider-custom::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.9);
+    border: 2px solid var(--accent-blue);
+  }
+
+  .slider-ticks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  /* Toggle Row */
+  .toggle-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.5);
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--inner-border);
+  }
+
+  .toggle-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e2e8f0;
+  }
+
+  .switch-btn {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+  }
+
+  .switch-btn input { opacity: 0; width: 0; height: 0; }
+
+  .switch-track {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #475569;
+    transition: .3s;
+    border-radius: 24px;
+  }
+
+  .switch-track:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+  }
+
+  input:checked + .switch-track {
+    background-color: var(--accent-blue);
+  }
+
+  input:checked + .switch-track:before {
+    transform: translateX(20px);
+  }
+
+  /* Dropdown Selector */
+  .select-custom {
+    width: 100%;
+    background: #1e293b;
+    border: 1px solid var(--inner-border);
+    color: #f1f5f9;
+    padding: 9px 12px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  /* Metrics Display */
+  .metric-card {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--inner-border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  .metric-headline {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+  }
+
+  .metric-big-val {
+    font-size: 26px;
+    font-weight: 800;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .metric-caption {
+    font-size: 11.5px;
+    margin-top: 2px;
+    font-weight: 600;
+  }
+
+  /* 1-10 Compression Rating */
+  .rating-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+  }
+
+  .rating-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    background: #1e293b;
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .rating-num.active-red {
+    background: var(--red-active);
+    color: #fff;
+    box-shadow: 0 0 8px var(--red-glow);
+  }
+
+  .rating-num.active-green {
+    background: var(--green-active);
+    color: #fff;
+  }
+
+  .status-callout-box {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    color: #fca5a5;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+    margin-top: auto;
+  }
+
+  /* BOTTOM WORKOUT QUICK-BAR */
+  .quick-practice-bar {
+    margin-top: 20px;
+    background: rgba(23, 32, 45, 0.7);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .timer-display {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--accent-blue);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .btn-timer {
+    background: var(--accent-blue);
+    color: #0b0f16;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-timer:hover {
+    background: #7dd3fc;
+  }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+
+  <header>
+    <div class="badge-3d">● 3D Real-Time Biomechanics</div>
+    <h1>Точная 3D-схема разгибания бедра и компенсаций</h1>
+    <p class="subtitle">Двигайте ползунок наклона таза или включите «Авто-демонстрацию», чтобы наблюдать движение анатомической модели и защемление в пояснице вживую.</p>
+  </header>
+
+  <!-- DASHBOARD WRAPPER -->
+  <div class="dashboard-main">
+
+    <!-- LEFT COLUMN: Bio-mechanical Movements -->
+    <div class="col-card">
+      <div class="col-title">
+        <span>Bio-mechanical Movements</span>
+      </div>
+
+      <!-- Item 1: Pure Glute Extension -->
+      <div class="movement-box active-green" id="boxPure" onclick="setPreset('pure')">
+        <div class="box-label">
+          <span class="pure">Изолированное Разгибание (Чистое)</span>
+          <span style="color:#4ade80;">10°</span>
+        </div>
+        <div class="diagram-svg-thumb">
+          <svg width="100%" height="80" viewBox="0 0 200 80">
+            <!-- Glute with Green Glow -->
+            <ellipse cx="65" cy="40" rx="28" ry="24" fill="#15803d" />
+            <circle cx="65" cy="40" r="18" fill="#22c55e" filter="drop-shadow(0 0 8px #22c55e)" />
+            <!-- Hip angle rays -->
+            <line x1="75" y1="40" x2="160" y2="40" stroke="#94a3b8" stroke-width="2" />
+            <line x1="75" y1="40" x2="155" y2="20" stroke="#38bdf8" stroke-width="3" />
+            <path d="M 120 40 A 45 45 0 0 0 118 28" fill="none" stroke="#38bdf8" stroke-width="2" />
+            <text x="130" y="32" font-size="11" font-weight="700" fill="#38bdf8">10°</text>
+            <text x="165" y="44" font-size="10" fill="#94a3b8">0°</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Item 2: Lumbar Compensation -->
+      <div class="movement-box" id="boxComp" onclick="setPreset('comp')">
+        <div class="box-label">
+          <span class="danger">Компенсация через Поясницу</span>
+          <span style="color:#f87171;">25°</span>
+        </div>
+        <div class="diagram-svg-thumb">
+          <svg width="100%" height="80" viewBox="0 0 200 80">
+            <!-- Spine with Red Glow -->
+            <path d="M 60 10 Q 90 40 60 70" fill="none" stroke="#ef4444" stroke-width="6" filter="drop-shadow(0 0 6px #ef4444)" />
+            <!-- Angle rays 25 deg -->
+            <line x1="75" y1="40" x2="160" y2="40" stroke="#94a3b8" stroke-width="2" />
+            <line x1="75" y1="40" x2="148" y2="10" stroke="#ef4444" stroke-width="3" />
+            <path d="M 120 40 A 45 45 0 0 0 112 18" fill="none" stroke="#ef4444" stroke-width="2" />
+            <text x="124" y="22" font-size="11" font-weight="700" fill="#ef4444">25°</text>
+            <text x="165" y="44" font-size="10" fill="#94a3b8">0°</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Item 3: Core Engagement -->
+      <div class="movement-box" id="boxCore" onclick="setPreset('core')">
+        <div class="box-label">
+          <span class="core">Включение Кора (Ribs down)</span>
+          <span style="color:#38bdf8;">Нейтраль</span>
+        </div>
+        <div class="diagram-svg-thumb">
+          <svg width="100%" height="80" viewBox="0 0 200 80">
+            <!-- Torso outline -->
+            <path d="M 70 15 Q 100 15 130 15 L 125 70 Q 100 70 75 70 Z" fill="#1e293b" stroke="#334155" />
+            <!-- Rectus Abdominis / Core 6-pack glow -->
+            <rect x="85" y="25" width="12" height="10" rx="2" fill="#22c55e" filter="drop-shadow(0 0 4px #22c55e)"/>
+            <rect x="103" y="25" width="12" height="10" rx="2" fill="#22c55e" filter="drop-shadow(0 0 4px #22c55e)"/>
+            <rect x="85" y="39" width="12" height="10" rx="2" fill="#22c55e" filter="drop-shadow(0 0 4px #22c55e)"/>
+            <rect x="103" y="39" width="12" height="10" rx="2" fill="#22c55e" filter="drop-shadow(0 0 4px #22c55e)"/>
+            <rect x="85" y="53" width="12" height="10" rx="2" fill="#22c55e" filter="drop-shadow(0 0 4px #22c55e)"/>
+            <rect x="103" y="53" width="12" height="10" rx="2" fill="#22c55e" filter="drop-shadow(0 0 4px #22c55e)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER COLUMN: LIVE MOVING 3D ANATOMICAL VIEWPORT -->
+    <div class="center-viewport">
+      <div class="viewport-header">
+        <span class="viewport-title">Биомеханика Разгибания Бедра при Гиперлордозе</span>
+        <button class="play-toggle-btn" id="btnPlayDemo" onclick="togglePlayDemo()">
+          <span id="demoIcon">▶</span> <span id="demoText">Авто-демонстрация</span>
+        </button>
+      </div>
+
+      <!-- FULLY RESPONSIVE DYNAMIC MOVING SVG SKELETON & MUSCLE LAYERS -->
+      <svg class="human-interactive-svg" viewBox="0 0 260 380">
+        <defs>
+          <radialGradient id="hotspotGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ff3333" stop-opacity="1"/>
+            <stop offset="60%" stop-color="#ef4444" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="gluteActiveGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#4ade80" stop-opacity="0.95"/>
+            <stop offset="70%" stop-color="#22c55e" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#15803d" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="blurFilter" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
+          </filter>
+        </defs>
+
+        <!-- Vertical Reference Guideline -->
+        <line x1="130" y1="20" x2="130" y2="360" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3" />
+
+        <!-- 1. Cranium / Head & Cervical Spine (Anchored) -->
+        <g id="headGroup" transform="translate(130, 42)">
+          <circle cx="0" cy="0" r="17" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1.5" />
+          <!-- Eye / Face profile profile direction -->
+          <path d="M 12 -4 Q 18 0 14 5 L 10 7 Q 14 12 8 16" fill="none" stroke="#94a3b8" stroke-width="1.5" />
+          <!-- Cervical Spine vertebrae -->
+          <path d="M -2 17 L -2 34" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round" />
+        </g>
+
+        <!-- 2. Thorax & Rib Cage (Tilts subtly with lordosis / rib flare) -->
+        <g id="thoraxGroup" transform="translate(130, 80)">
+          <!-- Thoracic cage volume silhouette -->
+          <path d="M -18 10 Q 15 8 20 34 Q 10 56 -14 56 Q -28 36 -18 10 Z" fill="rgba(71, 85, 105, 0.45)" stroke="#64748b" stroke-width="1.5" />
+          <!-- Rib arches -->
+          <path d="M -10 18 Q 4 22 16 18 M -12 28 Q 4 34 18 28 M -12 38 Q 4 44 16 38 M -10 48 Q 2 52 14 46" fill="none" stroke="#94a3b8" stroke-width="1.8" />
+          <!-- Thoracic Spine -->
+          <path d="M -3 0 Q -8 30 -3 56" fill="none" stroke="#f8fafc" stroke-width="7" stroke-linecap="round" />
+        </g>
+
+        <!-- 3. Dynamic Lumbar Spine (Curvature changes in real time) -->
+        <path id="dynLumbarSpine" d="M 127 136 Q 162 175 128 214" fill="none" stroke="#f1f5f9" stroke-width="7.5" stroke-linecap="round" />
+
+        <!-- 4. Lumbar Stress Spark (L5-S1 Hotspot) -->
+        <circle id="dynStressGlow" cx="152" cy="180" r="22" fill="url(#hotspotGrad)" filter="url(#blurFilter)" opacity="0.9" />
+        <circle id="dynStressCore" cx="152" cy="180" r="6" fill="#ffffff" opacity="0.95" />
+
+        <!-- 5. Abdominal Wall / Core muscles (front illumination) -->
+        <path id="dynAbsWall" d="M 148 132 Q 170 170 144 214" fill="none" stroke="#22c55e" stroke-width="8" stroke-linecap="round" opacity="0.2" />
+
+        <!-- 6. Pelvic Ring & Lower Extremity Group (Rotates dynamically around hip joint) -->
+        <g id="dynPelvisGroup" transform="translate(128, 214) rotate(16)">
+          <!-- Sacrum bone plate -->
+          <polygon points="0,-4 14,14 -14,14" fill="#94a3b8" />
+          <!-- Pelvic bone (Ilium & Ischium) silhouette -->
+          <ellipse cx="2" cy="4" rx="42" ry="24" fill="#334155" stroke="#94a3b8" stroke-width="2.5" />
+          <path d="M -32 0 Q -10 -8 20 0 Q 38 12 20 22 Q -12 18 -32 0 Z" fill="#475569" opacity="0.6" />
+
+          <!-- ASIS (front spine marker) & PSIS (back spine marker) -->
+          <circle cx="36" cy="0" r="4.5" fill="#f87171" title="Передняя ость (ASIS)" />
+          <circle cx="-32" cy="-2" r="4.5" fill="#38bdf8" title="Задняя ость (PSIS)" />
+
+          <!-- Gluteus Maximus Muscle (Illuminated volume on backside) -->
+          <path id="dynGluteGlow" d="M -16 -4 Q -48 35 2 64" fill="none" stroke="#22c55e" stroke-width="14" stroke-linecap="round" opacity="0.3" filter="url(#blurFilter)"/>
+          <path id="dynGluteMuscle" d="M -16 -4 Q -46 35 2 64" fill="none" stroke="#22c55e" stroke-width="9" stroke-linecap="round" />
+
+          <!-- Hip Joint Acetabulum -->
+          <circle cx="2" cy="8" r="7" fill="#e2e8f0" />
+
+          <!-- Femur (Thigh bone) extending downwards -->
+          <line id="dynFemur" x1="2" y1="8" x2="-8" y2="98" stroke="#e2e8f0" stroke-width="10" stroke-linecap="round" />
+          <!-- Knee joint -->
+          <circle cx="-8" cy="98" r="6" fill="#94a3b8" />
+          <!-- Tibia / Lower leg -->
+          <line x1="-8" y1="98" x2="-10" y2="152" stroke="#94a3b8" stroke-width="8" stroke-linecap="round" />
+        </g>
+
+        <!-- Annotations overlay -->
+        <g id="stressTooltip" transform="translate(170, 168)">
+          <rect width="82" height="22" rx="4" fill="#1c1114" stroke="#ef4444" stroke-width="1"/>
+          <text x="7" y="15" font-size="10" font-weight="700" fill="#fca5a5">L5-S1 стресс</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- RIGHT COLUMN: INTERACTIVE CONTROLS & LIVE STATS -->
+    <div class="col-card">
+      <div class="col-title">
+        <span>Параметры биомеханики</span>
+      </div>
+
+      <!-- Slider 1: Pelvic Tilt -->
+      <div class="control-group">
+        <div class="control-header-row">
+          <span>Угол наклона таза:</span>
+          <span class="angle-pill" id="txtTiltAngle">+16°</span>
+        </div>
+        <input type="range" id="sliderTilt" class="slider-custom" min="-20" max="20" value="16" step="1" oninput="onManualInput()">
+        <div class="slider-ticks">
+          <span>-20°</span>
+          <span>-10°</span>
+          <span>0°</span>
+          <span>+10°</span>
+          <span>+20°</span>
+        </div>
+      </div>
+
+      <!-- Toggle: Core Engagement -->
+      <div class="control-group">
+        <div class="toggle-container">
+          <span class="toggle-label">Напряжение кора</span>
+          <label class="switch-btn">
+            <input type="checkbox" id="chkCore" onchange="updateBiomechScene()">
+            <span class="switch-track"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Dropdown: Select Muscle -->
+      <div class="control-group">
+        <div class="control-header-row">
+          <span>Селект мышцы для фокуса:</span>
+        </div>
+        <select class="select-custom" id="selMuscle" onchange="updateBiomechScene()">
+          <option value="glute">Большая ягодичная</option>
+          <option value="psoas">Поясничная (Iliopsoas)</option>
+          <option value="abs">Мышцы пресса</option>
+        </select>
+      </div>
+
+      <!-- Metric 1: Glute Activation -->
+      <div class="metric-card">
+        <div class="metric-headline">Активация ягодиц</div>
+        <div class="metric-big-val" id="valGlutePercent">26,00 %</div>
+        <div class="metric-caption" id="capGluteFeedback" style="color:#f87171;">
+          Выключение: реципрокное торможение
+        </div>
+      </div>
+
+      <!-- Metric 2: Lumbar Compression (1 to 10 scale) -->
+      <div class="metric-card">
+        <div class="metric-headline">Компрессия поясницы (шкала 1 - 10)</div>
+        <div class="rating-row" id="compressionScale">
+          <div class="rating-num">1</div>
+          <div class="rating-num">2</div>
+          <div class="rating-num">3</div>
+          <div class="rating-num">4</div>
+          <div class="rating-num">5</div>
+          <div class="rating-num">6</div>
+          <div class="rating-num">7</div>
+          <div class="rating-num active-red">8</div>
+          <div class="rating-num active-red">9</div>
+          <div class="rating-num">10</div>
+        </div>
+      </div>
+
+      <!-- Status Callout -->
+      <div class="status-callout-box" id="bannerStatus">
+        <strong>Гиперлордоз: Выключение ягодиц</strong><br>
+        Опасность: нагрузка уходит в дугоотросчатые суставы L5-S1.
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK PRACTICE CONTROLLER AT BOTTOM -->
+  <div class="quick-practice-bar">
+    <div>
+      <div style="font-size:12px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Практика включения:</div>
+      <div style="font-size:15px; font-weight:700; color:#fff;" id="txtExName">
+        Выпад с «подкруткой» копчика под себя
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <div class="timer-display" id="timerClock">00:45</div>
+      <button class="btn-timer" id="btnTimerToggle" onclick="toggleTimerClock()">Старт таймера</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Animation & Runtime State
+  let isPlayingDemo = false;
+  let animRequestId = null;
+  let animDirection = 1;
+
+  let timerTotal = 45;
+  let timerInterval = null;
+
+  function updateBiomechScene() {
+    const tilt = parseInt(document.getElementById('sliderTilt').value);
+    const coreActive = document.getElementById('chkCore').checked;
+    const selectedMuscle = document.getElementById('selMuscle').value;
+
+    // 1. Text badge update
+    const txtTiltAngle = document.getElementById('txtTiltAngle');
+    if (tilt > 0) {
+      txtTiltAngle.innerText = `+${tilt}° (Передний)`;
+      txtTiltAngle.style.color = 'var(--red-active)';
+    } else if (tilt < 0) {
+      txtTiltAngle.innerText = `${tilt}° (Задний)`;
+      txtTiltAngle.style.color = 'var(--green-active)';
+    } else {
+      txtTiltAngle.innerText = `0° (Нейтраль)`;
+      txtTiltAngle.style.color = 'var(--accent-blue)';
+    }
+
+    // 2. Physical Rotation of Pelvis Group in Center 3D Viewport
+    const pelvisGroup = document.getElementById('dynPelvisGroup');
+    const pelvisBaseX = 128 + (tilt * 0.25);
+    const pelvisBaseY = 214 + (Math.abs(tilt) * 0.1);
+    pelvisGroup.setAttribute('transform', `translate(${pelvisBaseX}, ${pelvisBaseY}) rotate(${tilt})`);
+
+    // 3. Thorax & Rib Pitch (Lordosis flaring)
+    const thoraxGroup = document.getElementById('thoraxGroup');
+    const thoraxPitch = coreActive ? 0 : (tilt * 0.35);
+    thoraxGroup.setAttribute('transform', `translate(130, 80) rotate(${thoraxPitch})`);
+
+    // 4. Lumbar Spine Curvature
+    const spine = document.getElementById('dynLumbarSpine');
+    let curveX = 128 + (tilt * 2.1);
+    if (!coreActive) curveX += 14; // extra curvature without core support
+    spine.setAttribute('d', `M 127 136 Q ${curveX} 175 128 214`);
+
+    // 5. Stress Spark (L5-S1 Hotspot)
+    const sparkGlow = document.getElementById('dynStressGlow');
+    const sparkCore = document.getElementById('dynStressCore');
+    const tooltip = document.getElementById('stressTooltip');
+
+    const hotX = curveX - 4;
+    const hotY = 176;
+    sparkGlow.setAttribute('cx', hotX);
+    sparkGlow.setAttribute('cy', hotY);
+    sparkCore.setAttribute('cx', hotX);
+    sparkCore.setAttribute('cy', hotY);
+    tooltip.setAttribute('transform', `translate(${hotX + 16}, ${hotY - 10})`);
+
+    // 6. Abdominal Wall illumination
+    const absWall = document.getElementById('dynAbsWall');
+    if (coreActive || selectedMuscle === 'abs') {
+      absWall.setAttribute('opacity', '0.9');
+      absWall.setAttribute('stroke', '#22c55e');
+      absWall.setAttribute('filter', 'url(#blurFilter)');
+    } else {
+      absWall.setAttribute('opacity', '0.15');
+      absWall.setAttribute('stroke', '#475569');
+      absWall.removeAttribute('filter');
+    }
+
+    // 7. Glute Muscle dynamic color & glow
+    const gluteMuscle = document.getElementById('dynGluteMuscle');
+    const gluteGlow = document.getElementById('dynGluteGlow');
+
+    // 8. Calculations for Score & Compression
+    let gluteScore = 0;
+    let compressionVal = 0;
+
+    if (tilt > 3) {
+      // Anterior tilt / Hyperlordosis
+      compressionVal = Math.min(10, Math.max(5, Math.round(5 + tilt * 0.25 + (coreActive ? -2 : 2))));
+      gluteScore = Math.max(10, Math.round(50 - tilt * 1.8 + (coreActive ? 25 : -15)));
+    } else if (tilt < -3) {
+      // Posterior tilt
+      compressionVal = Math.max(1, Math.round(2 + Math.abs(tilt) * 0.15 + (coreActive ? -1 : 1)));
+      gluteScore = Math.min(96, Math.round(75 + Math.abs(tilt) * 1.2 + (coreActive ? 15 : 0)));
+    } else {
+      // Neutral
+      compressionVal = coreActive ? 1 : 3;
+      gluteScore = coreActive ? 95 : 67;
+    }
+
+    // Clamp
+    gluteScore = Math.min(100, Math.max(8, gluteScore));
+    compressionVal = Math.min(10, Math.max(1, compressionVal));
+
+    // Update Percentage Text
+    document.getElementById('valGlutePercent').innerText = `${gluteScore.toFixed(2)} %`.replace('.', ',');
+
+    // Feedback messages
+    const capGlute = document.getElementById('capGluteFeedback');
+    const banner = document.getElementById('bannerStatus');
+
+    if (compressionVal >= 7) {
+      capGlute.style.color = '#f87171';
+      capGlute.innerText = 'Опасность: выключение большой ягодичной';
+      
+      sparkGlow.setAttribute('opacity', '0.95');
+      sparkGlow.setAttribute('r', '24');
+      sparkCore.setAttribute('opacity', '1');
+      tooltip.style.display = 'block';
+
+      gluteMuscle.setAttribute('stroke', '#f87171');
+      gluteGlow.setAttribute('opacity', '0.1');
+
+      banner.style.background = 'rgba(239, 68, 68, 0.15)';
+      banner.style.borderColor = 'rgba(239, 68, 68, 0.35)';
+      banner.style.color = '#fca5a5';
+      banner.innerHTML = '<strong>Гиперлордоз: Выключение ягодиц</strong><br>Опасность: нагрузка уходит в дугоотросчатые суставы L5-S1.';
+    } else if (compressionVal >= 4) {
+      capGlute.style.color = 'var(--amber-active)';
+      capGlute.innerText = 'Умеренно: включите кор для защиты поясницы';
+
+      sparkGlow.setAttribute('opacity', '0.4');
+      sparkGlow.setAttribute('r', '14');
+      sparkCore.setAttribute('opacity', '0.5');
+      tooltip.style.display = 'none';
+
+      gluteMuscle.setAttribute('stroke', 'var(--amber-active)');
+      gluteGlow.setAttribute('opacity', '0.3');
+
+      banner.style.background = 'rgba(245, 158, 11, 0.15)';
+      banner.style.borderColor = 'rgba(245, 158, 11, 0.35)';
+      banner.style.color = '#fde68a';
+      banner.innerHTML = '<strong>Частичная компенсация</strong><br>Включите мышцы живота («закрыть ребра»), чтобы разгрузить крестец.';
+    } else {
+      capGlute.style.color = 'var(--green-active)';
+      capGlute.innerText = 'Идеально: чистое включение большой ягодичной';
+
+      sparkGlow.setAttribute('opacity', '0');
+      sparkCore.setAttribute('opacity', '0');
+      tooltip.style.display = 'none';
+
+      gluteMuscle.setAttribute('stroke', 'var(--green-active)');
+      gluteGlow.setAttribute('opacity', '0.7');
+      gluteGlow.setAttribute('stroke', 'var(--green-active)');
+
+      banner.style.background = 'rgba(34, 197, 94, 0.15)';
+      banner.style.borderColor = 'rgba(34, 197, 94, 0.35)';
+      banner.style.color = '#86efac';
+      banner.innerHTML = '<strong>Коррекция: Включение ягодиц</strong><br>Поясница полностью защищена. Максимальный нейромышечный отклик!';
+    }
+
+    // Update 1-10 rating scale visualization
+    updateRatingBar(compressionVal);
+  }
+
+  function updateRatingBar(val) {
+    const items = document.querySelectorAll('.rating-num');
+    items.forEach((item, index) => {
+      const num = index + 1;
+      item.className = 'rating-num';
+      if (num <= val) {
+        if (val >= 7) {
+          item.classList.add('active-red');
+        } else {
+          item.classList.add('active-green');
+        }
+      }
+    });
+  }
+
+  function onManualInput() {
+    if (isPlayingDemo) {
+      stopPlayDemo();
+    }
+    updateBiomechScene();
+  }
+
+  // Auto-Demonstration Logic
+  function togglePlayDemo() {
+    if (isPlayingDemo) {
+      stopPlayDemo();
+    } else {
+      startPlayDemo();
+    }
+  }
+
+  function startPlayDemo() {
+    isPlayingDemo = true;
+    document.getElementById('demoIcon').innerText = '❚❚';
+    document.getElementById('demoText').innerText = 'Остановить';
+
+    let lastTick = performance.now();
+    const slider = document.getElementById('sliderTilt');
+
+    function animate(time) {
+      if (!isPlayingDemo) return;
+      if (time - lastTick > 35) {
+        lastTick = time;
+        let current = parseInt(slider.value) + (animDirection * 1);
+        if (current >= 20) {
+          current = 20;
+          animDirection = -1;
+        } else if (current <= -15) {
+          current = -15;
+          animDirection = 1;
+        }
+        slider.value = current;
+        updateBiomechScene();
+      }
+      animRequestId = requestAnimationFrame(animate);
+    }
+    animRequestId = requestAnimationFrame(animate);
+  }
+
+  function stopPlayDemo() {
+    isPlayingDemo = false;
+    if (animRequestId) cancelAnimationFrame(animRequestId);
+    document.getElementById('demoIcon').innerText = '▶';
+    document.getElementById('demoText').innerText = 'Авто-демонстрация';
+  }
+
+  // Presets from left column
+  function setPreset(type) {
+    stopPlayDemo();
+    document.getElementById('boxPure').className = "movement-box";
+    document.getElementById('boxComp').className = "movement-box";
+    document.getElementById('boxCore').className = "movement-box";
+
+    const slider = document.getElementById('sliderTilt');
+    const chkCore = document.getElementById('chkCore');
+
+    if (type === 'pure') {
+      document.getElementById('boxPure').classList.add('active-green');
+      slider.value = 0;
+      chkCore.checked = true;
+      document.getElementById('txtExName').innerText = "Ягодичный мост с закрытыми ребрами (Изоляция)";
+    } else if (type === 'comp') {
+      document.getElementById('boxComp').classList.add('active-red');
+      slider.value = 18;
+      chkCore.checked = false;
+      document.getElementById('txtExName').innerText = "Выпад с «подкруткой» копчика под себя (Снятие спазма)";
+    } else if (type === 'core') {
+      document.getElementById('boxCore').classList.add('active-green');
+      slider.value = -5;
+      chkCore.checked = true;
+      document.getElementById('txtExName').innerText = "Планка с фиксацией ребер («Ribs Down»)";
+    }
+
+    updateBiomechScene();
+  }
+
+  // Timer
+  function updateTimerClockText() {
+    const mins = Math.floor(timerTotal / 60);
+    const secs = timerTotal % 60;
+    document.getElementById('timerClock').innerText = 
+      `${mins < 10 ? '0' + mins : mins}:${secs < 10 ? '0' + secs : secs}`;
+  }
+
+  function toggleTimerClock() {
+    const btn = document.getElementById('btnTimerToggle');
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      btn.innerText = "Продолжить";
+    } else {
+      btn.innerText = "Пауза";
+      timerInterval = setInterval(() => {
+        if (timerTotal > 0) {
+          timerTotal--;
+          updateTimerClockText();
+        } else {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          btn.innerText = "Завершено!";
+          beepAlert();
+        }
+      }, 1000);
+    }
+  }
+
+  function beepAlert() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(659.25, ctx.currentTime);
+      osc.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.35);
+    } catch(e) {}
+  }
+
+  // Init
+  updateBiomechScene();
+</script>
+
+</body>
+</html>
