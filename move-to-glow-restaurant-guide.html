@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Move to Glow · Как есть в ресторанах без вины</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F1E8;
+    --bg-soft:#EFE6D6;
+    --card:#FFFDF9;
+    --ink:#2B241C;
+    --ink-soft:#6E6459;
+    --ink-faint:#9A8F80;
+    --accent:#8C4A28;
+    --accent-strong:#6E3A1F;
+    --accent-soft:#D98F5F;
+    --line:#E2D6C2;
+    --good:#5E7A52;
+    --good-bg:#E7EDDF;
+    --mid:#B07C2E;
+    --mid-bg:#F3E6CE;
+    --occ:#A15A46;
+    --occ-bg:#F1DED6;
+    --shadow: 0 1px 2px rgba(43,36,28,.05), 0 8px 24px rgba(43,36,28,.06);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Manrope', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:'Playfair Display', serif;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 28px;}
+
+  header.top{
+    position:sticky; top:0; z-index:40;
+    background:rgba(246,241,232,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .top-inner{
+    max-width:920px; margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .brand{
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent-strong); font-weight:600; white-space:nowrap;
+  }
+  .brand span{color:var(--ink-faint); font-weight:500; margin:0 8px;}
+  nav.crumbs{display:flex; gap:22px;}
+  nav.crumbs a{
+    font-size:13.5px; color:var(--ink-soft); text-decoration:none; font-weight:500;
+    border-bottom:1px solid transparent; padding-bottom:2px; transition:color .15s, border-color .15s;
+  }
+  nav.crumbs a:hover{color:var(--accent); border-color:var(--accent-soft);}
+  @media (max-width:720px){ nav.crumbs{display:none;} }
+
+  .eyebrow{
+    display:inline-block; font-size:12px; letter-spacing:.1em; font-weight:600;
+    color:var(--accent-strong); background:var(--bg-soft); border:1px solid var(--line);
+    padding:6px 14px; border-radius:20px; margin-bottom:22px;
+  }
+
+  section{padding:72px 0;}
+  section.tight{padding:56px 0;}
+  .hero{padding:80px 0 56px;}
+  h1.title{
+    font-size:44px; line-height:1.16; margin:0 0 20px; font-weight:600; letter-spacing:-.01em;
+  }
+  h2.h{ font-size:30px; line-height:1.24; margin:0 0 12px; font-weight:600; }
+  p.lead{ font-size:18px; line-height:1.6; color:var(--ink-soft); max-width:640px; margin:0 0 30px;}
+  p.sub{ font-size:15.5px; line-height:1.65; color:var(--ink-soft); max-width:600px; margin:0 0 34px;}
+  hr.rule{border:none; border-top:1px solid var(--line); margin:0;}
+
+  .quickpills{display:flex; flex-wrap:wrap; gap:10px;}
+  .qpill{
+    display:flex; align-items:center; gap:8px;
+    background:var(--card); border:1px solid var(--line); border-radius:24px;
+    padding:11px 18px; font-size:14px; font-weight:500; color:var(--ink);
+    text-decoration:none; box-shadow:var(--shadow); transition:transform .15s, border-color .15s;
+  }
+  .qpill:hover{ transform:translateY(-1px); border-color:var(--accent-soft); }
+  .qpill em{font-style:normal; color:var(--accent);}
+
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .grid2{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+  @media (max-width:760px){ .grid3{grid-template-columns:1fr;} .grid2{grid-template-columns:1fr;} }
+
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px;
+    padding:26px 24px; box-shadow:var(--shadow);
+  }
+  .icon-circle{
+    width:38px; height:38px; border-radius:50%; background:var(--accent);
+    display:flex; align-items:center; justify-content:center; margin-bottom:16px;
+    color:#fff; font-size:17px;
+  }
+  .card h3{ font-size:17px; margin:0 0 8px; font-weight:600; }
+  .card p{ font-size:14.5px; line-height:1.6; color:var(--ink-soft); margin:0; }
+
+  .tabbar{
+    display:flex; gap:8px; flex-wrap:wrap; margin-bottom:26px;
+    border-bottom:1px solid var(--line); padding-bottom:0;
+  }
+  .tabbtn{
+    background:none; border:none; cursor:pointer; font-family:inherit;
+    font-size:14.5px; font-weight:600; color:var(--ink-faint);
+    padding:10px 4px 12px; margin-right:22px; position:relative;
+    border-bottom:2px solid transparent; transition:color .15s, border-color .15s;
+  }
+  .tabbtn:hover{color:var(--accent);}
+  .tabbtn.active{color:var(--accent-strong); border-color:var(--accent);}
+  .tabpanel{display:none;}
+  .tabpanel.active{display:block; animation:fade .25s ease;}
+  @keyframes fade{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);} }
+
+  .tier{
+    border-radius:12px; padding:16px 18px; margin-bottom:12px; display:flex; gap:14px; align-items:flex-start;
+  }
+  .tier .dot{ width:9px; height:9px; border-radius:50%; margin-top:6px; flex:none; }
+  .tier.good{background:var(--good-bg);} .tier.good .dot{background:var(--good);}
+  .tier.mid{background:var(--mid-bg);} .tier.mid .dot{background:var(--mid);}
+  .tier.occ{background:var(--occ-bg);} .tier.occ .dot{background:var(--occ);}
+  .tier .label{ font-size:12.5px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; margin-bottom:4px; }
+  .tier.good .label{color:var(--good);} .tier.mid .label{color:var(--mid);} .tier.occ .label{color:var(--occ);}
+  .tier .txt{font-size:14.5px; line-height:1.55; color:var(--ink);}
+
+  .lifehacks{list-style:none; margin:0; padding:0; display:grid; gap:14px;}
+  .lifehacks li{
+    display:flex; gap:16px; align-items:flex-start; background:var(--card);
+    border:1px solid var(--line); border-radius:14px; padding:18px 20px; box-shadow:var(--shadow);
+  }
+  .lifehacks .num{
+    font-family:'Playfair Display',serif; font-size:20px; color:var(--accent-soft); flex:none; width:26px;
+  }
+  .lifehacks h4{margin:0 0 4px; font-size:15.5px; font-weight:600;}
+  .lifehacks p{margin:0; font-size:14px; color:var(--ink-soft); line-height:1.55;}
+
+  .acc-item{ border-bottom:1px solid var(--line); }
+  .acc-item:first-child{border-top:1px solid var(--line);}
+  .acc-q{
+    width:100%; text-align:left; background:none; border:none; cursor:pointer;
+    font-family:inherit; font-size:16.5px; font-weight:600; color:var(--ink);
+    padding:20px 4px; display:flex; justify-content:space-between; align-items:center; gap:16px;
+  }
+  .acc-q .plus{font-size:20px; color:var(--accent); font-weight:400; transition:transform .2s; flex:none;}
+  .acc-item.open .plus{transform:rotate(45deg);}
+  .acc-a{
+    max-height:0; overflow:hidden; transition:max-height .28s ease;
+  }
+  .acc-a-inner{padding:0 4px 20px; font-size:14.5px; line-height:1.65; color:var(--ink-soft); max-width:680px;}
+
+  .checklist-wrap{
+    background:var(--card); border:1px solid var(--line); border-radius:18px;
+    padding:30px 30px 26px; box-shadow:var(--shadow);
+  }
+  .cl-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:18px; flex-wrap:wrap; gap:8px;}
+  .cl-head h3{margin:0; font-size:19px; font-weight:600;}
+  .cl-count{font-size:13.5px; color:var(--ink-soft); font-weight:600;}
+  .progress-track{height:6px; background:var(--bg-soft); border-radius:6px; overflow:hidden; margin-bottom:22px;}
+  .progress-fill{height:100%; width:0%; background:var(--accent); transition:width .3s ease;}
+  .cl-item{
+    display:flex; align-items:flex-start; gap:12px; padding:11px 0; border-bottom:1px solid var(--line);
+    cursor:pointer;
+  }
+  .cl-item:last-child{border-bottom:none;}
+  .cl-item input{margin-top:4px; width:16px; height:16px; accent-color:var(--accent); cursor:pointer; flex:none;}
+  .cl-item span{font-size:14.5px; line-height:1.5; color:var(--ink); transition:color .15s;}
+  .cl-item input:checked + span{color:var(--ink-faint); text-decoration:line-through;}
+
+  .cta-band{
+    background:linear-gradient(180deg, var(--bg-soft), var(--bg));
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:78px 0; text-align:center;
+  }
+  .quote{
+    border-left:3px solid var(--accent); background:var(--card);
+    border-radius:0 14px 14px 0; padding:24px 30px; text-align:left;
+    font-family:'Playfair Display', serif; font-style:italic; font-size:19px; line-height:1.5;
+    color:var(--ink); max-width:640px; margin:28px auto; box-shadow:var(--shadow);
+  }
+  .quote cite{display:block; font-style:normal; font-family:'Manrope',sans-serif; font-size:12.5px;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--accent-strong); font-weight:700; margin-top:12px;}
+  .cta-btn{
+    display:inline-block; background:var(--accent); color:#fff; font-weight:700; font-size:14.5px;
+    letter-spacing:.04em; text-transform:uppercase; padding:17px 38px; border-radius:30px;
+    text-decoration:none; box-shadow:0 10px 24px rgba(140,74,40,.28); transition:transform .15s, background .15s;
+    border:none; cursor:pointer;
+  }
+  .cta-btn:hover{ background:var(--accent-strong); transform:translateY(-1px); }
+
+  footer{padding:34px 0; text-align:center;}
+  footer p{margin:0; font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint);}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">MOVE TO GLOW <span>·</span> ПРОСТРАНСТВО ДАШИ</div>
+    <nav class="crumbs">
+      <a href="#rules">До похода</a>
+      <a href="#choose">Выбор блюд</a>
+      <a href="#hacks">Лайфхаки</a>
+      <a href="#faq">Вопросы</a>
+      <a href="#checklist">Чек-лист</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">МИНИ-ГИД ДЛЯ ЗАКРЫТОЙ ГРУППЫ</span>
+    <h1 class="title serif">Как есть в ресторане<br>и не чувствовать вину</h1>
+    <p class="lead">Поход в кафе — это не экзамен на силу воли. Это просто ещё один приём пищи в твоём дне. Разбираем, как выбирать блюда, о чём не переживать и что сделать, чтобы выйти из-за стола довольной, а не виноватой.</p>
+    <div class="quickpills">
+      <a class="qpill" href="#rules"><em>01</em> Подготовка</a>
+      <a class="qpill" href="#choose"><em>02</em> Выбор блюд по типу заведения</a>
+      <a class="qpill" href="#hacks"><em>03</em> Лайфхаки за столом</a>
+      <a class="qpill" href="#checklist"><em>04</em> Чек-лист</a>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="rules">
+  <div class="wrap">
+    <span class="eyebrow">ПЕРЕД ВЫХОДОМ</span>
+    <h2 class="h serif">Три вещи, которые снимают тревогу заранее</h2>
+    <p class="sub">Дело не в том, чтобы прийти голодной и «заслужить» ужин. Дело в том, чтобы прийти спокойной.</p>
+    <div class="grid3">
+      <div class="card">
+        <div class="icon-circle">✦</div>
+        <h3>Не голодай перед выходом</h3>
+        <p>Пропущенный обед почти всегда заканчивается тем, что ты сметаешь хлебную корзину за пять минут. Ешь как обычно — тогда за столом решения принимает голова, а не голод.</p>
+      </div>
+      <div class="card">
+        <div class="icon-circle">☰</div>
+        <h3>Загляни в меню заранее</h3>
+        <p>Если заведение новое, посмотри меню онлайн за пару минут. Спокойный выбор дома — это одно решение, а не десять на ходу под взглядом официанта.</p>
+      </div>
+      <div class="card">
+        <div class="icon-circle">◔</div>
+        <h3>Отпусти идею «отработать» ужин</h3>
+        <p>Одна трапеза не решает и не портит форму, которую ты держишь годами. Тренировка — это не штраф, а еда — не проступок.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="choose">
+  <div class="wrap">
+    <span class="eyebrow">МОДУЛЬ · ВЫБОР БЛЮД</span>
+    <h2 class="h serif">Выбери, куда идёшь</h2>
+    <p class="sub">Нажми на тип заведения — покажем, что брать смело, что взять и не переживать, и что оставить для особого случая.</p>
+
+    <div class="tabbar" id="tabbar">
+      <button class="tabbtn active" data-tab="t1">Италия и пицца</button>
+      <button class="tabbtn" data-tab="t2">Азия и суши</button>
+      <button class="tabbtn" data-tab="t3">Фастфуд и бургеры</button>
+      <button class="tabbtn" data-tab="t4">Кофейня и десерты</button>
+      <button class="tabbtn" data-tab="t5">Бизнес-ланч</button>
+    </div>
+
+    <div class="tabpanel active" id="t1">
+      <div class="tier good"><div class="dot"></div><div><div class="label">Бери смело</div><div class="txt">Тартар, карпаччо, супы, паста с томатным или овощным соусом, пицца на тонком тесте с одной начинкой, брускетта.</div></div></div>
+      <div class="tier mid"><div class="dot"></div><div><div class="label">Отлично, но следи за порцией</div><div class="txt">Паста в сливочном соусе, лазанья, ризотto с сыром — попроси половину порции или раздели с кем-то.</div></div></div>
+      <div class="tier occ"><div class="dot"></div><div><div class="label">Для особого раза</div><div class="txt">Тирамису, панна-котта, фокачча с большим количеством масла — если очень хочется, возьми одну на двоих.</div></div></div>
+    </div>
+
+    <div class="tabpanel" id="t2">
+      <div class="tier good"><div class="dot"></div><div><div class="label">Бери смело</div><div class="txt">Сашими, роллы без темпуры и без соусов на майонезной основе, мисо-суп, edamame, тартар из тунца.</div></div></div>
+      <div class="tier mid"><div class="dot"></div><div><div class="label">Отлично, но следи за порцией</div><div class="txt">Роллы с крем-сыром и соусом унаги, лапша вок с курицей — бери 4–6 штук, а не полный сет.</div></div></div>
+      <div class="tier occ"><div class="dot"></div><div><div class="label">Для особого раза</div><div class="txt">Темпура-роллы, жареные гёдза, чизкейк «Филадельфия» — их удобно разделить на компанию.</div></div></div>
+    </div>
+
+    <div class="tabpanel" id="t3">
+      <div class="tier good"><div class="dot"></div><div><div class="label">Бери смело</div><div class="txt">Бургер без второй булки-крышки или в листе салата, гриль-курица, салат с белком, овощи вместо картофеля фри.</div></div></div>
+      <div class="tier mid"><div class="dot"></div><div><div class="label">Отлично, но следи за порцией</div><div class="txt">Классический бургер среднего размера, небольшая порция картофеля — раздели её, а не бери полную одна.</div></div></div>
+      <div class="tier occ"><div class="dot"></div><div><div class="label">Для особого раза</div><div class="txt">Двойной бургер с беконом, милкшейк, большая картошка с сырным соусом — редкое лакомство, а не привычка.</div></div></div>
+    </div>
+
+    <div class="tabpanel" id="t4">
+      <div class="tier good"><div class="dot"></div><div><div class="label">Бери смело</div><div class="txt">Флэт уайт или капучино на обычном молоке, эспрессо, чай, овсянка с ягодами, творожная запеканка.</div></div></div>
+      <div class="tier mid"><div class="dot"></div><div><div class="label">Отлично, но следи за порцией</div><div class="txt">Латте на растительном молоке с сиропом, круассан, чизкейк — выбери что-то одно, а не напиток и десерт вместе.</div></div></div>
+      <div class="tier occ"><div class="dot"></div><div><div class="label">Для особого раза</div><div class="txt">Раф с карамелью, наполеон, шоколадный фондан — прекрасны как повод посидеть подольше, не каждый день.</div></div></div>
+    </div>
+
+    <div class="tabpanel" id="t5">
+      <div class="tier good"><div class="dot"></div><div><div class="label">Бери смело</div><div class="txt">Суп на бульоне, гриль-рыба или курица с овощами, гречка или булгур на гарнир, овощной салат без майонеза.</div></div></div>
+      <div class="tier mid"><div class="dot"></div><div><div class="label">Отлично, но следи за порцией</div><div class="txt">Плов, паста, картофельное пюре — обычная порция без добавки хлеба к ней же.</div></div></div>
+      <div class="tier occ"><div class="dot"></div><div><div class="label">Для особого раза</div><div class="txt">Жареное во фритюре, наваристые сливочные супы, комплекс с десертом — если сегодня хочется, это нормально.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="hacks">
+  <div class="wrap">
+    <span class="eyebrow">ЗА СТОЛОМ</span>
+    <h2 class="h serif">Универсальные лайфхаки, которые работают в любом заведении</h2>
+    <p class="sub">Ни один пункт не про запреты. Это про то, как есть внимательнее и получать больше удовольствия.</p>
+    <ul class="lifehacks">
+      <li><span class="num">1</span><div><h4>Начни с белка и овощей</h4><p>Если в тарелке есть выбор, съешь сначала их — так быстрее приходит сытость, и остальное уже не хочется доедать через силу.</p></div></li>
+      <li><span class="num">2</span><div><h4>Соусы и заправки — отдельно</h4><p>Попроси «соус в отдельной пиале» — так ты сама решаешь сколько, а не съедаешь всё, что уже вылито на тарелку.</p></div></li>
+      <li><span class="num">3</span><div><h4>Раздели десерт</h4><p>Одна ложка вместе с подругой часто закрывает желание сладкого не хуже целой порции — и оставляет место для удовольствия, а не тяжести.</p></div></li>
+      <li><span class="num">4</span><div><h4>Стакан воды до заказа</h4><p>Помогает отличить настоящий голод от жажды или усталости и просто делает трапезу комфортнее.</p></div></li>
+      <li><span class="num">5</span><div><h4>Алкоголь — после того, как выбрала еду</h4><p>Бокал вина не «портит» вечер. Выбери его осознанно, а не на голодный желудок, когда тянет ко всему подряд.</p></div></li>
+      <li><span class="num">6</span><div><h4>Ешь медленно и без телефона</h4><p>Мозгу нужно 15–20 минут, чтобы получить сигнал сытости. Разговор за столом — лучший способ не спешить.</p></div></li>
+    </ul>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="faq">
+  <div class="wrap">
+    <span class="eyebrow">СНИМАЕМ ТРЕВОЖНОСТЬ</span>
+    <h2 class="h serif">Отвечаем на вопросы, которые крутятся в голове за столом</h2>
+    <div id="accordion">
+      <div class="acc-item">
+        <button class="acc-q">Я сегодня уже плотно поела — можно ли ещё и в ресторан?<span class="plus">+</span></button>
+        <div class="acc-a"><div class="acc-a-inner">Да. Один сытный день не отменяет тех недель и месяцев привычного питания, которые формируют твою форму. Организм считает баланс не за один вечер, а за более длинный период — расслабься и получай удовольствие.</div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-q">Я взяла то, что «не планировала» — теперь всё пропало?<span class="plus">+</span></button>
+        <div class="acc-a"><div class="acc-a-inner">Нет. Один непредсказанный выбор — это просто один приём пищи, а не начало срыва. Срыв начинается не от еды, а от мысли «раз уже нарушила — гулять так гулять». Следующий приём пищи можно снова сделать обычным.</div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-q">Ужинать после 18:00 — это плохо?<span class="plus">+</span></button>
+        <div class="acc-a"><div class="acc-a-inner">Нет, это миф. Тело не начинает откладывать жир по часам. Значение имеет то, сколько и как ты ешь в течение суток в целом, а не время на часах.</div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-q">Как отказаться от третьей порции хлеба, не чувствуя себя странно?<span class="plus">+</span></button>
+        <div class="acc-a"><div class="acc-a-inner">Просто попроси официанта не подливать её или отодвинь корзину подальше от себя. Никому не нужно объяснение — это обычная бытовая просьба, а не повод для неловкости.</div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-q">Что если после ужина в ресторане весы покажут больше?<span class="plus">+</span></button>
+        <div class="acc-a"><div class="acc-a-inner">Это почти всегда вода и содержимое желудка, а не жир — соль в блюдах задерживает жидкость на день-два. Не взвешивайся на следующее утро специально ради этого, дай телу вернуться в обычный ритм.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="checklist" class="tight">
+  <div class="wrap">
+    <span class="eyebrow">С СОБОЙ</span>
+    <h2 class="h serif">Чек-лист перед выходом</h2>
+    <p class="sub">Отметь пункты — и иди в ресторан спокойной.</p>
+    <div class="checklist-wrap">
+      <div class="cl-head">
+        <h3>Готова к ужину вне дома</h3>
+        <div class="cl-count" id="clCount">0 из 6</div>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="clProgress"></div></div>
+      <label class="cl-item"><input type="checkbox"><span>Поела в обычном режиме, не голодала специально</span></label>
+      <label class="cl-item"><input type="checkbox"><span>Посмотрела меню заранее, если заведение новое</span></label>
+      <label class="cl-item"><input type="checkbox"><span>Решила, что беру белок и овощи в приоритете</span></label>
+      <label class="cl-item"><input type="checkbox"><span>Взяла с собой воду или закажу её первым делом</span></label>
+      <label class="cl-item"><input type="checkbox"><span>Отпустила мысль «нужно отработать» этот ужин</span></label>
+      <label class="cl-item"><input type="checkbox"><span>Настроилась получать удовольствие, а не сдавать экзамен</span></label>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <div class="wrap">
+    <span class="eyebrow">ТВОЙ РИТМ, ТВОИ ПРАВИЛА</span>
+    <h2 class="h serif">Рестораны — часть жизни, а не враг твоей формы</h2>
+    <div class="quote">
+      «Один ужин вне дома не решает ничего — ни в плохую, ни в хорошую сторону. Решает то, как ты питаешься изо дня в день. Иди и наслаждайся.»
+      <cite>— Даша, Move to Glow</cite>
+    </div>
+    <button class="cta-btn" onclick="document.getElementById('checklist').scrollIntoView({behavior:'smooth'})">К чек-листу</button>
+  </div>
+</div>
+
+<footer>
+  <p>тело · лицо · свобода</p>
+</footer>
+
+<script>
+  document.querySelectorAll('.tabbtn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tabpanel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  document.querySelectorAll('.acc-item').forEach(item=>{
+    const q = item.querySelector('.acc-q');
+    const a = item.querySelector('.acc-a');
+    q.addEventListener('click', ()=>{
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.acc-item').forEach(i=>{
+        i.classList.remove('open');
+        i.querySelector('.acc-a').style.maxHeight = null;
+      });
+      if(!isOpen){
+        item.classList.add('open');
+        a.style.maxHeight = a.scrollHeight + 'px';
+      }
+    });
+  });
+
+  const boxes = document.querySelectorAll('.cl-item input');
+  const countEl = document.getElementById('clCount');
+  const progEl = document.getElementById('clProgress');
+  function updateChecklist(){
+    const checked = document.querySelectorAll('.cl-item input:checked').length;
+    countEl.textContent = checked + ' из ' + boxes.length;
+    progEl.style.width = (checked / boxes.length * 100) + '%';
+  }
+  boxes.forEach(b=>b.addEventListener('change', updateChecklist));
+  updateChecklist();
+</script>
+
+</body>
+</html>
