@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Универсальные лайфхаки для любого заведения · Move to Glow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F1E8;
+    --bg-soft: #EFE6D6;
+    --card: #FFFDF9;
+    --ink: #2B241C;
+    --ink-soft: #6E6459;
+    --ink-faint: #9A8F80;
+    --accent: #8C4A28;
+    --accent-strong: #6E3A1F;
+    --accent-soft: #D98F5F;
+    --line: #E2D6C2;
+    --shadow: 0 1px 2px rgba(43,36,28,.05), 0 8px 24px rgba(43,36,28,.06);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 40px 20px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Manrope', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: 'Playfair Display', serif; }
+  .wrap { max-width: 780px; margin: 0 auto; }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: .12em;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  h1.title {
+    font-size: 32px;
+    line-height: 1.25;
+    margin: 0 0 12px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  p.sub {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 auto;
+    max-width: 580px;
+  }
+  
+  .lifehacks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+  }
+  .lifehacks li {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
+    transition: transform .15s ease;
+  }
+  .lifehacks li:hover {
+    transform: translateY(-2px);
+  }
+  .lifehacks .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--accent-soft);
+    flex: none;
+    width: 28px;
+    line-height: 1;
+    margin-top: 2px;
+  }
+  .lifehacks h3 {
+    margin: 0 0 6px;
+    font-size: 16.5px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .lifehacks p {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+  footer p {
+    margin: 0;
+    font-size: 12px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="header">
+    <span class="eyebrow">MOVE TO GLOW · ПАМЯТКА</span>
+    <h1 class="title serif">Универсальные лайфхаки, которые работают в любом заведении</h1>
+    <p class="sub">Ни один пункт не про запреты. Это про то, как есть внимательнее и получать больше удовольствия.</p>
+  </div>
+
+  <ul class="lifehacks">
+    <li>
+      <span class="num">1</span>
+      <div>
+        <h3>Начни с белка и овощей</h3>
+        <p>Если в тарелке есть выбор, съешь сначала их — так быстрее приходит сытость, и остальное уже не хочется доедать через силу.</p>
+      </div>
+    </li>
+    <li>
+      <span class="num">2</span>
+      <div>
+        <h3>Соусы и заправки — отдельно</h3>
+        <p>Попроси «соус в отдельной пиале» — так ты сама решаешь сколько, а не съедаешь всё, что уже вылито на тарелку.</p>
+      </div>
+    </li>
+    <li>
+      <span class="num">3</span>
+      <div>
+        <h3>Раздели десерт</h3>
+        <p>Одна ложка вместе с подругой часто закрывает желание сладкого не хуже целой порции — и оставляет место для удовольствия, а не тяжести.</p>
+      </div>
+    </li>
+    <li>
+      <span class="num">4</span>
+      <div>
+        <h3>Стакан воды до заказа</h3>
+        <p>Помогает отличить настоящий голод от жажды или усталости и просто делает трапезу комфортнее.</p>
+      </div>
+    </li>
+    <li>
+      <span class="num">5</span>
+      <div>
+        <h3>Алкоголь — после того, как выбрала еду</h3>
+        <p>Бокал вина не «портит» вечер. Выбери его осознанно, а не на голодный желудок, когда тянет ко всему подряд.</p>
+      </div>
+    </li>
+    <li>
+      <span class="num">6</span>
+      <div>
+        <h3>Ешь медленно и без телефона</h3>
+        <p>Мозгу нужно 15–20 минут, чтобы получить сигнал сытости. Разговор за столом — лучший способ не спешить.</p>
+      </div>
+    </li>
+  </ul>
+
+  <footer>
+    <p>Move to Glow · Тело · Лицо · Свобода</p>
+  </footer>
+</div>
+
+</body>
+</html>
